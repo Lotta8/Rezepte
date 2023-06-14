@@ -7,9 +7,9 @@ import (
 )
 
 type Recipe struct {
-	ID          int      `json:"id"`
-	Name        string   `json:"name"`
-	Ingredients []string `json:"ingredients"`
+	ID          int      `json:"id" :"id"`
+	Name        string   `json:"name" :"name"`
+	Ingredients []string `json:"ingredients" :"ingredients"`
 }
 
 var recipes = []Recipe{
