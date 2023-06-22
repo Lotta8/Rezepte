@@ -1,9 +1,19 @@
 package model
 
 type Recipies struct { // Bauplan definiert
-	Id   int
-	Task string
-	Done bool
+	Ingredien Ingredien
+}
+
+type Ingredien struct {
+	Id          int
+	Bezeichnung string
+	Menge       int
+	Unit        Unit
+}
+
+type Unit struct {
+	Id          int
+	Bezeichnung string
 }
 
 func New(task string) Recipies {

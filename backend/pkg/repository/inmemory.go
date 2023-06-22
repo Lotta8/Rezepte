@@ -1,6 +1,91 @@
 package repository
 
 import (
+	"errors"
+)
+
+type Ingredient struct {
+	ID          int
+	Bezeichnung string
+}
+
+type Recipe struct {
+	ID          int
+	Bezeichnung string
+	Zutaten     []RecipeIngredient
+}
+
+type RecipeIngredient struct {
+	Zutat   Ingredient
+	Einheit string
+	Menge   int
+}
+
+type InMemoryStorage struct {
+	Zutaten map[int]Ingredient
+	Rezepte map[int]Recipe
+	nextID  int
+}
+
+func NewInMemoryStorage() *InMemoryStorage {
+	return &InMemoryStorage{
+		Zutaten: make(map[int]Ingredient),
+		Rezepte: make(map[int]Recipe),
+		nextID:  1,
+	}
+}
+
+func (s *InMemoryStorage) AddZutat(zutat Ingredient) {
+	s.Zutaten[zutat.ID] = zutat
+}
+
+func (s *InMemoryStorage) GetZutat(id int) (Ingredient, error) {
+	zutat, ok := s.Zutaten[id]
+	if !ok {
+		return Ingredient{}, errors.New("Zutat nicht gefunden")
+	}
+	return zutat, nil
+}
+
+func (s *InMemoryStorage) AddRezept(rezept Recipe) {
+	rezept.ID = s.nextID
+	s.nextID++
+	s.Rezepte[rezept.ID] = rezept
+}
+
+func (s *InMemoryStorage) GetRezept(id int) (Recipe, error) {
+	rezept, ok := s.Rezepte[id]
+	if !ok {
+		return Recipe{}, errors.New("Rezept nicht gefunden")
+	}
+	return rezept, nil
+}
+
+func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge int) error {
+	rezept, err := s.GetRezept(rezeptID)
+	if err != nil {
+		return err
+	}
+
+	zutat, err := s.GetZutat(zutatID)
+	if err != nil {
+		return err
+	}
+
+	recipeIngredient := RecipeIngredient{
+		Zutat:   zutat,
+		Einheit: einheit,
+		Menge:   menge,
+	}
+
+	rezept.Zutaten = append(rezept.Zutaten, recipeIngredient)
+
+	return nil
+}
+
+/*package repository
+
+import (
 	"fmt"
 	"reminders/pkg/model"
 )
@@ -56,4 +141,4 @@ func (storage InMemoryStorageImpl) Update(id int) (*model.Reminder, error) {
 		}
 	}
 	return nil, fmt.Errorf("id not exist")
-}
+}*/
