@@ -2,16 +2,79 @@ package repository
 
 import (
 	"errors"
+	"fmt"
 	"reminders/pkg/model"
 )
 
+var suppe = model.Recipe{
+	ID: 1,
+	Bezeichnung: "Würziger Fleischsalat",
+	Zutaten: []model.RecipeIngredient{
+		{
+			Zutat: model.Ingredient{
+				ID:          1,
+				Bezeichnung: "Zutat 1",
+			},
+			Einheit: "g",
+			Menge:
+				,
+		},
+		{
+			Zutat: model.Ingredient{
+				ID:          2,
+				Bezeichnung: "Zutat 2",
+			},
+			Einheit: "ml",
+			Menge:   250,
+		},
+	},
+}
+
+var Salat = model.Recipe{
+	ID: 1,
+	Bezeichnung: "Würziger Fleischsalat",
+	Zutaten: []model.RecipeIngredient{
+		{
+			Zutat: model.Ingredient{
+				ID:          3,
+				Bezeichnung: "Zutat 3",
+			},
+			Einheit: "g",
+			Menge:   100,
+		},
+		{
+			Zutat: model.Ingredient{
+				ID:          2,
+				Bezeichnung: "Zutat 2",
+			},
+			Einheit: "ml",
+			Menge:   250,
+		},
+	},
+}
+
+// Ausgabe der Default-Variable
+fmt.Printf("Default-Rezept: %+v\n", defaultRecipe)
+}
+Diese Default-Variable stellt ein Beispiel für ein Rezept mit zwei Zutaten dar. Du kannst die Werte nach Bedarf anpassen oder weitere Zutaten hinzufügen.
+
+
+
+
+
+
+
+}
+		//"Schinkenwurst", "Essiggurken", "Mayonnaise", "Miracle Whip", " Senf", "Pfeffer", "Salz", "Zucker"}},
 type InMemoryStorage struct {
-	Rezepte map[int]model.Recipe
+	Rezepte []model.Recipe
 }
 
 func NewInMemoryStorage() *InMemoryStorage {
+	rezepte := make([]model.Recipe, 0)
+	rezepte = append(rezepte, suppe, Salat)
 	return &InMemoryStorage{
-		Rezepte: make(map[int]model.Recipe),
+		Rezepte: rezepte
 	}
 }
 
