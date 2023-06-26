@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6e81e077-d8bb-4294-9bd3-32eb9329f65a" name="Changes" comment="first verion inmemory">
+    <list default="true" id="6e81e077-d8bb-4294-9bd3-32eb9329f65a" name="Changes" comment="inmemory und post_resipies">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/model/recipies.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/model/recipies.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/repository/inmemory.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/repository/inmemory.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -81,7 +79,8 @@
     <MESSAGE value="read me aktualisiert" />
     <MESSAGE value="deleted reminders and modify handler" />
     <MESSAGE value="first verion inmemory" />
-    <option name="LAST_COMMIT_MESSAGE" value="first verion inmemory" />
+    <MESSAGE value="inmemory und post_resipies" />
+    <option name="LAST_COMMIT_MESSAGE" value="inmemory und post_resipies" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
