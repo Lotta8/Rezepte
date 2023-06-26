@@ -17,7 +17,7 @@ var suppe = model.Recipe{
 			},
 			Einheit: "g",
 			Menge:
-				,
+			,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -65,7 +65,7 @@ Diese Default-Variable stellt ein Beispiel für ein Rezept mit zwei Zutaten dar.
 
 
 }
-		//"Schinkenwurst", "Essiggurken", "Mayonnaise", "Miracle Whip", " Senf", "Pfeffer", "Salz", "Zucker"}},
+//"Schinkenwurst", "Essiggurken", "Mayonnaise", "Miracle Whip", " Senf", "Pfeffer", "Salz", "Zucker"}},
 type InMemoryStorage struct {
 	Rezepte []model.Recipe
 }
