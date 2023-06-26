@@ -1,28 +1,28 @@
 <template>
   <div class="container">
     <h1 class="display-1">Reminder App</h1>
-    <form @submit.prevent="addTodo">
+    <form @submit.prevent="addTodo"> //@Symbol über actions kann definiert werden, was soll passieren. Submit Action etwas bestätigen.
       <div class="input-group mb-3">
-        <input type="text"
+        <input type="text" //Feld zum Reinschreiben
                class="form-control"
                placeholder="Enter a new reminder"
                aria-label="Enter a new reminder"
                aria-describedby="button-add"
                v-model="newTodoDescription">
         <button class="btn btn-outline-primary" type="submit" id="button-add">Add Reminder</button>
-      </div>
-    </form>
-    <ul class="list-group mt-3">
+      </div> //Container
+    </form> //Input Feld und Button zusammenhalten
+    <ul class="list-group mt-3"> //erstellt Liste mit so wie wie im Input Feld eingegeben werden Elemente
       <li class="d-flex justify-content-between list-group-item list-group-item-action align-items-center"
-          v-for="todo in todos"
+          v-for="todo in todos" //egal wie viele, dynamisch und interaktiv, wachst oder schrumpft das File.
           :key="todo.id">
 <span>
-<input class="form-check-input me-1"
+<input class="form-check-input me-1" //Input Feld mit Checkbox
        type="checkbox"
        value=""
        aria-label="..."
        v-model="todo.done"
-       @change="updateTodoStatus(todo)">
+       @change="updateTodoStatus(todo)"> //Aktion
 <span :class="{ 'completed': todo.done }">{{ todo.task }}</span>
 </span>
         <span>
@@ -37,8 +37,8 @@ import {onMounted, ref} from 'vue';
 import axios from 'axios';
 export default {
   setup() {
-    const todos = ref([]);
-    const newTodoDescription = ref('');
+    const todos = ref([]); //Variable Liste von Todos
+    const newTodoDescription = ref(''); //neuer leerer String
     const fetchTodos = async () => {
       try {
         const response = await axios.get('http://localhost:8080/api/reminder/all');
