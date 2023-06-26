@@ -1,25 +1,18 @@
 package model
 
-type Recipies struct { // Bauplan definiert
-	Ingredien Ingredien
-}
-
-type Ingredien struct {
-	Id          int
-	Bezeichnung string
-	Menge       int
-	Unit        Unit
-}
-
-type Unit struct {
-	Id          int
+type Ingredient struct {
+	ID          int
 	Bezeichnung string
 }
 
-func New(task string) Recipies {
-	return Recipies{Task: task}
+type Recipe struct {
+	ID          int
+	Bezeichnung string
+	Zutaten     []RecipeIngredient
 }
 
-func (r *Recipies) Toggle() {
-	r.Done = !r.Done
+type RecipeIngredient struct {
+	Zutat   Ingredient
+	Einheit string
+	Menge   int
 }
