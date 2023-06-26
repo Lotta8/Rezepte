@@ -1,59 +1,37 @@
 package repository
 
 import (
-	"fmt"
+	"errors"
 	"reminders/pkg/model"
 )
 
-var nextId = 2
-
-type InMemoryStorageImpl struct {
-	reminders *[]model.Reminder
+type InMemoryStorage struct {
+	Rezepte map[int]model.Recipe
 }
 
-func New() *InMemoryStorageImpl {
-	nextId = 1
-	reminders := make([]model.Reminder, 0)
-	return &InMemoryStorageImpl{reminders: &reminders}
-}
-
-func (storage InMemoryStorageImpl) Get(id int) (*model.Reminder, error) {
-	for _, reminder := range *storage.reminders {
-		if id == reminder.Id {
-			return &reminder, nil
-		}
+func NewInMemoryStorage() *InMemoryStorage {
+	return &InMemoryStorage{
+		Rezepte: make(map[int]model.Recipe),
 	}
-	return nil, fmt.Errorf("id not exist")
 }
 
-func (storage InMemoryStorageImpl) GetAll() []model.Reminder {
-	return *storage.reminders
+func (s *InMemoryStorage) AddRezept(rezept model.Recipe) {
+	rezept.ID = s.nextID
+	s.nextID++
+	s.Rezepte[rezept.ID] = rezept
 }
 
-func (storage InMemoryStorageImpl) Delete(id int) bool {
-	for i, reminder := range *storage.reminders {
-		if id == reminder.Id {
-			*storage.reminders = append((*storage.reminders)[:i], (*storage.reminders)[i+1:]...)
-			return true
-		}
+func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
+	rezept, ok := s.Rezepte[id]
+	if !ok {
+		return model.Recipe{}, errors.New("Rezept nicht gefunden")
 	}
-	return false
+	return rezept, nil
 }
 
-func (storage InMemoryStorageImpl) Create(task string) (int, error) {
-	reminder := model.New(task)
-	reminder.Id = nextId
-	nextId++
-	*storage.reminders = append(*storage.reminders, reminder)
-	return reminder.Id, nil
-}
-
-func (storage InMemoryStorageImpl) Update(id int) (*model.Reminder, error) {
-	for i, reminder := range *storage.reminders {
-		if id == reminder.Id {
-			(&(*storage.reminders)[i]).Toggle()
-			return &(*storage.reminders)[i], nil
-		}
+func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge int) error {
+	rezept, err := s.GetRezept(rezeptID)
+	if err != nil {
+		return err
 	}
-	return nil, fmt.Errorf("id not exist")
 }
