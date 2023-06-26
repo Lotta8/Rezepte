@@ -11,7 +11,7 @@ var suppe = model.Recipe{
 	Bezeichnung: "Würziger Fleischsalat",
 	Zutaten: []model.RecipeIngredient{
 		{
-			Zutat: model.Ingredient{
+			Zutat: model.in{
 				ID:          1,
 				Bezeichnung: "Zutat 1",
 			},
@@ -56,7 +56,6 @@ var Salat = model.Recipe{
 // Ausgabe der Default-Variable
 fmt.Printf("Default-Rezept: %+v\n", defaultRecipe)
 }
-Diese Default-Variable stellt ein Beispiel für ein Rezept mit zwei Zutaten dar. Du kannst die Werte nach Bedarf anpassen oder weitere Zutaten hinzufügen.
 
 
 

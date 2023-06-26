@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="80058eeb-123b-49db-a753-714f80f72a1d" name="Changes" comment="V.3">
+    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="v.5">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pkg/repository/inmemory.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/repository/inmemory.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -80,7 +81,8 @@
     <MESSAGE value="deleted reminders and modify handler" />
     <MESSAGE value="first verion inmemory" />
     <MESSAGE value="V.3" />
-    <option name="LAST_COMMIT_MESSAGE" value="V.3" />
+    <MESSAGE value="v.5" />
+    <option name="LAST_COMMIT_MESSAGE" value="v.5" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
