@@ -16,8 +16,7 @@ var suppe = model.Recipe{
 				Bezeichnung: "Zutat 1",
 			},
 			Einheit: "g",
-			Menge: 10
-				,
+			Menge: 10,
 		},
 		{
 			Zutat: model.Ingredient{
