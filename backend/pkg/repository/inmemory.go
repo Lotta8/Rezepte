@@ -673,7 +673,7 @@ type InMemoryStorage struct {
 
 func NewInMemoryStorage() *InMemoryStorage {
 	rezepte := make([]model.Recipe, 0)
-	rezepte = append(rezepte, suppe, Salat)
+	rezepte = append(rezepte, WürzigerFleischsalat, Griessklösschen, Spargelcremesuppe, GulaschMitSpätzle, KartoffelgratinMitPilzragout, MilchReisMitKirschen, Apfelstrudel, Kaiserschmarrn, Fasnachtskrapfen)
 	return &InMemoryStorage{
 		Rezepte: rezepte,
 	}
@@ -693,7 +693,7 @@ func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
 	return rezept, nil
 }
 
-func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge int) error {
+func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge float64) error {
 	rezept, err := s.GetRezept(rezeptID)
 	if err != nil {
 		return err
