@@ -666,7 +666,7 @@ fmt.Printf("Default-Rezept: %+v\n", defaultRecipe)
 }
 Diese Default-Variable stellt ein Beispiel für ein Rezept mit zwei Zutaten dar. Du kannst die Werte nach Bedarf anpassen oder weitere Zutaten hinzufügen.
 	}
-//"Schinkenwurst", "Essiggurken", "Mayonnaise", "Miracle Whip", " Senf", "Pfeffer", "Salz", "Zucker"}},
+
 type InMemoryStorage struct {
 	Rezepte []model.Recipe
 }
