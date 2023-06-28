@@ -2,8 +2,7 @@ package repository
 
 import (
 	"errors"
-	"fmt"
-	"reminders/pkg/model"
+	"recipies/pkg/model"
 )
 
 var suppe = model.Recipe{
