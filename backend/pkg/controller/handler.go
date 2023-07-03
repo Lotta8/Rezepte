@@ -7,8 +7,8 @@ import (
 )
 
 type Handler struct { // Objekt Handler
-	engine     *gin.Engine                     // Datentyp gin.engine
-	repository *repository.InMemoryStorageImpl // selber definiert
+	engine     *gin.Engine                 // Datentyp gin.engine
+	repository *repository.InMemoryStorage // selber definiert
 }
 
 func New() *Handler {
@@ -22,6 +22,7 @@ func New() *Handler {
 	router.GET("/all", h.GetRecipes)
 	router.POST("/", h.CreateRecipe)
 	router.PUT("/", h.UpdateRecipe)
+	router.DELETE("/", h.DeleteEinkaufskorb)
 	return h
 }
 
@@ -30,4 +31,16 @@ func (h *Handler) Run() { // Func welches an Objekt Handler gebunden ist.
 	if err != nil {
 		log.Fatalln(err)
 	}
+}
+
+func (h *Handler) DeleteRecipe(context *gin.Context) {
+
+}
+
+func (h *Handler) GetRecipe(context *gin.Context) {
+
+}
+
+func (h *Handler) GetRecipes(context *gin.Context) {
+
 }

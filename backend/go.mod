@@ -1,4 +1,4 @@
-module reminders
+module recipies
 
 go 1.19
 

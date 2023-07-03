@@ -19,12 +19,6 @@ type ShoppingCart struct {
 	Recipes []Recipe `json:"recipes"`
 }
 
-var recipees = []Recipe{
-	{ID: 1, Name: "Würziger Fleischsalat", Ingredients: []string{"Fleischwurst", "Schinkenwurst", "Essiggurken", "Mayonnaise", "Miracle Whip", " Senf", "Pfeffer", "Salz", "Zucker"}},
-	{ID: 2, Name: "Griessklösschen", Ingredients: []string{"Butter", "Milch", "Hartweisengriess", "Petersilie", "Salz", "Pfeffer", "Eier"}},
-	{ID: 3, Name: "Spargelcremesuppe", Ingredients: []string{"Weisse Spargeln", "Butter", "Schalotten", "Zucker", "Mehl", "Gemüsebouillon", "Rahm", "Salz", "Pfeffer"}},
-}
-
 var shoppingCart ShoppingCart
 
 func getRecipeeByID(w http.ResponseWriter, r *http.Request) {

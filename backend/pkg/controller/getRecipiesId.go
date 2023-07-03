@@ -15,16 +15,9 @@ type Recip struct {
 	Ingredients []string `json:"ingredients"`
 }
 
-var recipe = []Recipe{
-	{ID: 1, Name: "Würziger Fleischsalat", Ingredients: []string{"Fleischwurst", "Schinkenwurst", "Essiggurken", "Mayonnaise", "Miracle Whip", " Senf", "Pfeffer", "Salz", "Zucker"}},
-	{ID: 2, Name: "Griessklösschen", Ingredients: []string{"Butter", "Milch", "Hartweisengriess", "Petersilie", "Salz", "Pfeffer", "Eier"}},
-	{ID: 3, Name: "Spargelcremesuppe", Ingredients: []string{"Weisse Spargeln", "Butter", "Schalotten", "Zucker", "Mehl", "Gemüsebouillon", "Rahm", "Salz", "Pfeffer"}},
-}
+var recipes []Recip // Datenquelle für Rezepte
 
-func getRecipeByID(
-	w http.ResponseWriter,
-	r *http.Request,
-) {
+func getRecipeByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	id, err := strconv.Atoi(params["id"])
 	if err != nil {

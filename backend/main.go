@@ -1,7 +1,7 @@
 package main
 
 import (
-	"reminders/pkg/controller"
+	"recipies/pkg/controller"
 )
 
 func main() { //main function erstellt uns ein Objekt den Controller

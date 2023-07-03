@@ -10,4 +10,4 @@ RUN go build -v -o . ./...
 
 EXPOSE 8080
 
-CMD ["./reminders"]
+CMD ["./recipies"]
