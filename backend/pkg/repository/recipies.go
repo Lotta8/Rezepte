@@ -5,6 +5,11 @@ import (
 	"recipies/pkg/model"
 )
 
+func New() *InMemoryStorage {
+	// Implementierung der New-Funktion, um ein neues InMemoryStorage-Objekt zu erstellen
+	return &InMemoryStorage{}
+}
+
 var WürzigerFleischsalat = model.Recipe{
 	ID:          1,
 	Bezeichnung: "Würziger Fleischsalat",
@@ -84,7 +89,7 @@ var WürzigerFleischsalat = model.Recipe{
 	},
 }
 
-var Griessklösschen = model.Recipe{
+var Griesskloesschen = model.Recipe{
 	ID:          2,
 	Bezeichnung: "Griessklösschen",
 	Zutaten: []model.RecipeIngredient{
@@ -660,14 +665,14 @@ var Fasnachtskrapfen = model.Recipe{
 		},
 	},
 }
- Ausgabe der Default-Variable
+
 fmt.Printf("Default-Rezept: %+v\n", defaultRecipe)
 }
-Diese Default-Variable stellt ein Beispiel für ein Rezept mit zwei Zutaten dar. Du kannst die Werte nach Bedarf anpassen oder weitere Zutaten hinzufügen.
-	}
+
 
 type InMemoryStorage struct {
 	Rezepte []model.Recipe
+	nextID  int
 }
 
 func NewInMemoryStorage() *InMemoryStorage {
@@ -692,9 +697,11 @@ func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
 	return rezept, nil
 }
 
+
 func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge float64) error {
-	rezept, err := s.GetRezept(rezeptID)
+	_, err := s.GetRezept(rezeptID)
 	if err != nil {
 		return err
 	}
+	return nil
 }
