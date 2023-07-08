@@ -4,17 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="korrekte Version">
+    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="version 03.07.2023">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/delete_einkaufskorb.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/delete_einkaufskorb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/delete_recipies.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/deleteEinkaufskorbById.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/get_einkaufskorb.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/get_einkaufskorb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_all.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_all.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_id.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_id.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/handler.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/post_recipies.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/AddToEinkaufskorb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/repository/inmemory.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/repository/recipies.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/repository/shoppingCard.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/repository/shoppingCart.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -109,7 +100,8 @@
     <MESSAGE value="V.3" />
     <MESSAGE value="v.5" />
     <MESSAGE value="korrekte Version" />
-    <option name="LAST_COMMIT_MESSAGE" value="korrekte Version" />
+    <MESSAGE value="version 03.07.2023" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 03.07.2023" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
