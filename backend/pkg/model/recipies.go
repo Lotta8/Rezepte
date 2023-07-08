@@ -14,5 +14,5 @@ type Recipe struct {
 type RecipeIngredient struct {
 	Zutat   Ingredient
 	Einheit string
-	Menge   int
+	Menge   float64
 }

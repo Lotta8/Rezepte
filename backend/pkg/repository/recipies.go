@@ -10,7 +10,7 @@ func New() *InMemoryStorage {
 	return &InMemoryStorage{}
 }
 
-var WürzigerFleischsalat = model.Recipe{
+var WuerzigerFleischsalat = model.Recipe{
 	ID:          1,
 	Bezeichnung: "Würziger Fleischsalat",
 	Zutaten: []model.RecipeIngredient{
@@ -20,7 +20,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Fleischwurst",
 			},
 			Einheit: "g",
-			Menge:   100,
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -28,7 +28,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Schinkenwurst",
 			},
 			Einheit: "g",
-			Menge:   100,
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -36,7 +36,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Essiggurken",
 			},
 			Einheit: "g",
-			Menge:   100,
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -44,7 +44,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Mayonnaise",
 			},
 			Einheit: "g",
-			Menge:   150,
+			Menge:   150.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -52,7 +52,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Miracle Whip",
 			},
 			Einheit: "g",
-			Menge:   80,
+			Menge:   80.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -60,7 +60,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Senf",
 			},
 			Einheit: "TL",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -68,7 +68,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Pfeffer",
 			},
 			Einheit: "Pr",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -76,7 +76,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Zucker",
 			},
 			Einheit: "TL",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -84,7 +84,7 @@ var WürzigerFleischsalat = model.Recipe{
 				Bezeichnung: "Salz",
 			},
 			Einheit: "Pr",
-			Menge:   1,
+			Menge:   1.00,
 		},
 	},
 }
@@ -99,7 +99,7 @@ var Griesskloesschen = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "EL",
-			Menge:   2,
+			Menge:   2.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -107,7 +107,7 @@ var Griesskloesschen = model.Recipe{
 				Bezeichnung: "Milch",
 			},
 			Einheit: "ml",
-			Menge:   250,
+			Menge:   250.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -115,7 +115,7 @@ var Griesskloesschen = model.Recipe{
 				Bezeichnung: "Hartweizengriess",
 			},
 			Einheit: "g",
-			Menge:   100,
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -123,7 +123,7 @@ var Griesskloesschen = model.Recipe{
 				Bezeichnung: "Petersilie",
 			},
 			Einheit: "Pck",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -131,7 +131,7 @@ var Griesskloesschen = model.Recipe{
 				Bezeichnung: "Eier",
 			},
 			Einheit: "Stk",
-			Menge:   2,
+			Menge:   2.00,
 		},
 	},
 }
@@ -145,7 +145,7 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "weisse Spargeln",
 			},
 			Einheit: "kg",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -153,7 +153,7 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "Schalotten",
 			},
 			Einheit: "Stk",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -161,7 +161,7 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "Zucker",
 			},
 			Einheit: "Pr",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -169,7 +169,7 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "Mehl",
 			},
 			Einheit: "EL",
-			Menge:   3/4,
+			Menge:   0.75,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -177,7 +177,7 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "Rahm",
 			},
 			Einheit: "dl",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -185,7 +185,7 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "EL",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -193,11 +193,11 @@ var Spargelcremesuppe = model.Recipe{
 				Bezeichnung: "Gemüsebouillon",
 			},
 			Einheit: "dl",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 	},
 }
-var GulaschMitSpätzle = model.Recipe{
+var GulaschMitSpaetzle = model.Recipe{
 	ID:          4,
 	Bezeichnung: "Gulasch mit Spätzle",
 	Zutaten: []model.RecipeIngredient{
@@ -207,7 +207,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Gulasch",
 			},
 			Einheit: "g",
-			Menge:   200,
+			Menge:   200.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -215,7 +215,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Zwiebel",
 			},
 			Einheit: "Stk",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -223,7 +223,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Butterschmalz",
 			},
 			Einheit: "EL",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -231,7 +231,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Tomatenmark",
 			},
 			Einheit: "EL",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -239,7 +239,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Majoran",
 			},
 			Einheit: "EL",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -247,7 +247,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Wacholderbeeren",
 			},
 			Einheit: "TL",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -255,7 +255,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Wein, rot",
 			},
 			Einheit: "ml",
-			Menge:   75,
+			Menge:   75.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -263,7 +263,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Fleischbrühe",
 			},
 			Einheit: "ml",
-			Menge:  125,
+			Menge:  125.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -271,7 +271,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Honig",
 			},
 			Einheit: "TL",
-			Menge:  1/4,
+			Menge:  0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -279,7 +279,7 @@ var GulaschMitSpätzle = model.Recipe{
 				Bezeichnung: "Spätzle",
 			},
 			Einheit: "g",
-			Menge:  100,
+			Menge:  100.00,
 		},
 	},
 }
@@ -293,7 +293,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Kartoffeln",
 			},
 			Einheit: "g",
-			Menge:   100,
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -301,7 +301,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Rahm",
 			},
 			Einheit: "ml",
-			Menge:   100,
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -309,7 +309,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Milch",
 			},
 			Einheit: "ml",
-			Menge:   25,
+			Menge:   25.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -317,7 +317,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Pilze",
 			},
 			Einheit: "g",
-			Menge:   50,
+			Menge:   50.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -325,7 +325,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Schalotten",
 			},
 			Einheit: "g",
-			Menge:   12,
+			Menge:   12.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -333,7 +333,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Greyerzer",
 			},
 			Einheit: "g",
-			Menge:   25,
+			Menge:   25.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -341,7 +341,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Knoblauchzehe",
 			},
 			Einheit: "Stk",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -349,7 +349,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "g",
-			Menge:  5,
+			Menge:  5.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -357,7 +357,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Salz",
 			},
 			Einheit: "Pr",
-			Menge:  1,
+			Menge:  1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -365,7 +365,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Pfeffer",
 			},
 			Einheit: "Pr",
-			Menge:  1,
+			Menge:  1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -373,7 +373,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Muskat",
 			},
 			Einheit: "Pr",
-			Menge:  1,
+			Menge:  1.00,
 		},
 	},
 }
@@ -387,7 +387,7 @@ var MilchReisMitKirschen = model.Recipe{
 				Bezeichnung: "Milchreis",
 			},
 			Einheit: "g",
-			Menge:   75,
+			Menge:   75.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -395,7 +395,7 @@ var MilchReisMitKirschen = model.Recipe{
 				Bezeichnung: "Kirschen",
 			},
 			Einheit: "g",
-			Menge:   88,
+			Menge:   88.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -403,7 +403,7 @@ var MilchReisMitKirschen = model.Recipe{
 				Bezeichnung: "Zimt",
 			},
 			Einheit: "Pr",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -411,7 +411,7 @@ var MilchReisMitKirschen = model.Recipe{
 				Bezeichnung: "Speisestärke",
 			},
 			Einheit: "EL",
-			Menge:   1/2,
+			Menge:   0.50,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -419,7 +419,7 @@ var MilchReisMitKirschen = model.Recipe{
 				Bezeichnung: "Milch",
 			},
 			Einheit: "ml",
-			Menge:   380,
+			Menge:   380.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -427,7 +427,7 @@ var MilchReisMitKirschen = model.Recipe{
 				Bezeichnung: "Zucker",
 			},
 			Einheit: "EL",
-			Menge:   3/4,
+			Menge:   0.75,
 		},
 	},
 }
@@ -441,7 +441,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Äpfel",
 			},
 			Einheit: "g",
-			Menge:   225,
+			Menge:   225.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -449,7 +449,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Zitrone",
 			},
 			Einheit: "Stk",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -457,7 +457,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Sultaninen",
 			},
 			Einheit: "g",
-			Menge:   13,
+			Menge:   13.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -465,7 +465,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Rohzucker",
 			},
 			Einheit: "g",
-			Menge:   23,
+			Menge:   23.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -473,7 +473,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Vanillezucker",
 			},
 			Einheit: "Pck",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -481,7 +481,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Zimt",
 			},
 			Einheit: "TL",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -489,7 +489,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "g",
-			Menge:   25,
+			Menge:   25.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -497,7 +497,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Hartweizengriess",
 			},
 			Einheit: "EL",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -505,7 +505,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Milch",
 			},
 			Einheit: "dl",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -513,7 +513,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Mehl",
 			},
 			Einheit: "g",
-			Menge:   75,
+			Menge:   75.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -521,7 +521,7 @@ var Apfelstrudel = model.Recipe{
 				Bezeichnung: "Salz",
 			},
 			Einheit: "TL",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 	},
 }
@@ -535,7 +535,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Mehl",
 			},
 			Einheit: "g",
-			Menge:   38,
+			Menge:   38.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -543,7 +543,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Milch",
 			},
 			Einheit: "dl",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -551,7 +551,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Salz",
 			},
 			Einheit: "Pr",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -559,7 +559,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Zucker",
 			},
 			Einheit: "EL",
-			Menge:   3/4,
+			Menge:   0.75,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -567,7 +567,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Eigelb",
 			},
 			Einheit: "Stk",
-			Menge:   3/4,
+			Menge:   0.75,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -575,7 +575,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Eiweiss, steif",
 			},
 			Einheit: "Stk",
-			Menge:   3/4,
+			Menge:   0.75,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -583,7 +583,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "g",
-			Menge:   13,
+			Menge:   13.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -591,7 +591,7 @@ var Kaiserschmarrn = model.Recipe{
 				Bezeichnung: "Rosinen",
 			},
 			Einheit: "g",
-			Menge:   10,
+			Menge:   10.00,
 		},
 	},
 }
@@ -605,7 +605,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "g",
-			Menge:   6,
+			Menge:   6.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -613,7 +613,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Eier",
 			},
 			Einheit: "Stk",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -621,7 +621,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Eigelb",
 			},
 			Einheit: "Stk",
-			Menge:   1/4,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -629,7 +629,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Konfitüre",
 			},
 			Einheit: "g",
-			Menge:   25,
+			Menge:   25.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -637,7 +637,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Mehl",
 			},
 			Einheit: "g",
-			Menge:   50,
+			Menge:   50.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -645,7 +645,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Milch",
 			},
 			Einheit: "ml",
-			Menge:   25,
+			Menge:   25.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -653,7 +653,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Salz",
 			},
 			Einheit: "Pr",
-			Menge:   1,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -661,7 +661,7 @@ var Fasnachtskrapfen = model.Recipe{
 				Bezeichnung: "Puderzucker",
 			},
 			Einheit: "g",
-			Menge:   5,
+			Menge:   5.00,
 		},
 	},
 }
@@ -677,7 +677,7 @@ type InMemoryStorage struct {
 
 func NewInMemoryStorage() *InMemoryStorage {
 	rezepte := make([]model.Recipe, 0)
-	rezepte = append(rezepte, WürzigerFleischsalat, Griessklösschen, Spargelcremesuppe, GulaschMitSpätzle, KartoffelgratinMitPilzragout, MilchReisMitKirschen, Apfelstrudel, Kaiserschmarrn, Fasnachtskrapfen)
+	rezepte = append(rezepte, WuerzigerFleischsalat, Griesskloesschen, Spargelcremesuppe, GulaschMitSpaetzle, KartoffelgratinMitPilzragout, MilchReisMitKirschen, Apfelstrudel, Kaiserschmarrn, Fasnachtskrapfen)
 	return &InMemoryStorage{
 		Rezepte: rezepte,
 	}
