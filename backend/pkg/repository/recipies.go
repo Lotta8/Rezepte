@@ -3,11 +3,127 @@ package repository
 import (
 	"errors"
 	"recipies/pkg/model"
+	"sync"
 )
 
-func New() *InMemoryStorage {
-	// Implementierung der New-Funktion, um ein neues InMemoryStorage-Objekt zu erstellen
-	return &InMemoryStorage{}
+type InMemoryStorage struct {
+	mutex        sync.RWMutex
+	Rezepte      map[int]model.Recipe
+	nextID       int
+	cartByUserID map[int][]string
+}
+
+func NewInMemoryStorage() *InMemoryStorage {
+	rezepte := make(map[int]model.Recipe)
+	return &InMemoryStorage{
+		Rezepte:      rezepte,
+		nextID:       1,
+		cartByUserID: make(map[int][]string),
+	}
+}
+
+func (s *InMemoryStorage) AddRezept(rezept model.Recipe) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	rezept.ID = s.nextID
+	s.nextID++
+	s.Rezepte[rezept.ID] = rezept
+}
+
+func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
+	s.mutex.RLock()
+	defer s.mutex.RUnlock()
+
+	rezept, ok := s.Rezepte[id]
+	if !ok {
+		return model.Recipe{}, errors.New("Rezept nicht gefunden")
+	}
+	return rezept, nil
+}
+
+func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge float64) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	rezept, err := s.GetRezept(rezeptID)
+	if err != nil {
+		return err
+	}
+
+	zutat := model.Ingredient{ID: zutatID}
+	recipeIngredient := model.RecipeIngredient{Zutat: zutat, Einheit: einheit, Menge: menge}
+	rezept.Zutaten = append(rezept.Zutaten, recipeIngredient)
+	s.Rezepte[rezeptID] = rezept
+
+	return nil
+}
+
+func (s *InMemoryStorage) DeleteRecipe(id int) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	_, ok := s.Rezepte[id]
+	if !ok {
+		return errors.New("Rezept nicht gefunden")
+	}
+
+	delete(s.Rezepte, id)
+
+	return nil
+}
+
+func (s *InMemoryStorage) DeleteEinkaufskorb(userID int) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	_, ok := s.cartByUserID[userID]
+	if !ok {
+		return errors.New("Einkaufskorb nicht gefunden")
+	}
+
+	delete(s.cartByUserID, userID)
+
+	return nil
+}
+
+func (s *InMemoryStorage) AddToCart(userID int, item string) {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	s.cartByUserID[userID] = append(s.cartByUserID[userID], item)
+}
+
+func (s *InMemoryStorage) GetCart(userID int) ([]string, error) {
+	s.mutex.RLock()
+	defer s.mutex.RUnlock()
+
+	cart, ok := s.cartByUserID[userID]
+	if !ok {
+		return nil, errors.New("Einkaufswagen nicht gefunden")
+	}
+
+	return cart, nil
+}
+
+func (s *InMemoryStorage) RemoveFromCart(userID int, item string) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	cart, ok := s.cartByUserID[userID]
+	if !ok {
+		return errors.New("Einkaufswagen nicht gefunden")
+	}
+
+	for i, v := range cart {
+		if v == item {
+			// Remove the item from the cart
+			s.cartByUserID[userID] = append(cart[:i], cart[i+1:]...)
+			return nil
+		}
+	}
+
+	return errors.New("Artikel nicht im Einkaufswagen gefunden")
 }
 
 var WuerzigerFleischsalat = model.Recipe{
@@ -135,6 +251,7 @@ var Griesskloesschen = model.Recipe{
 		},
 	},
 }
+
 var Spargelcremesuppe = model.Recipe{
 	ID:          3,
 	Bezeichnung: "Spargelcremesuppe",
@@ -197,6 +314,7 @@ var Spargelcremesuppe = model.Recipe{
 		},
 	},
 }
+
 var GulaschMitSpaetzle = model.Recipe{
 	ID:          4,
 	Bezeichnung: "Gulasch mit Spätzle",
@@ -263,7 +381,7 @@ var GulaschMitSpaetzle = model.Recipe{
 				Bezeichnung: "Fleischbrühe",
 			},
 			Einheit: "ml",
-			Menge:  125.00,
+			Menge:   125.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -271,7 +389,7 @@ var GulaschMitSpaetzle = model.Recipe{
 				Bezeichnung: "Honig",
 			},
 			Einheit: "TL",
-			Menge:  0.25,
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -279,10 +397,11 @@ var GulaschMitSpaetzle = model.Recipe{
 				Bezeichnung: "Spätzle",
 			},
 			Einheit: "g",
-			Menge:  100.00,
+			Menge:   100.00,
 		},
 	},
 }
+
 var KartoffelgratinMitPilzragout = model.Recipe{
 	ID:          5,
 	Bezeichnung: "Kartoffelgratin mit Pilzragout",
@@ -349,7 +468,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Butter",
 			},
 			Einheit: "g",
-			Menge:  5.00,
+			Menge:   5.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -357,7 +476,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Salz",
 			},
 			Einheit: "Pr",
-			Menge:  1.00,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -365,7 +484,7 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Pfeffer",
 			},
 			Einheit: "Pr",
-			Menge:  1.00,
+			Menge:   1.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -373,10 +492,11 @@ var KartoffelgratinMitPilzragout = model.Recipe{
 				Bezeichnung: "Muskat",
 			},
 			Einheit: "Pr",
-			Menge:  1.00,
+			Menge:   1.00,
 		},
 	},
 }
+
 var MilchReisMitKirschen = model.Recipe{
 	ID:          6,
 	Bezeichnung: "Milchreis mit Kirschen",
@@ -431,6 +551,7 @@ var MilchReisMitKirschen = model.Recipe{
 		},
 	},
 }
+
 var Apfelstrudel = model.Recipe{
 	ID:          7,
 	Bezeichnung: "Apfelstrudel",
@@ -617,23 +738,47 @@ var Fasnachtskrapfen = model.Recipe{
 		},
 		{
 			Zutat: model.Ingredient{
-				ID:          44,
-				Bezeichnung: "Eigelb",
+				ID:          17,
+				Bezeichnung: "Mehl",
 			},
-			Einheit: "Stk",
-			Menge:   0.25,
+			Einheit: "g",
+			Menge:   60.00,
 		},
 		{
 			Zutat: model.Ingredient{
 				ID:          47,
-				Bezeichnung: "Konfitüre",
+				Bezeichnung: "Mandeln",
 			},
 			Einheit: "g",
-			Menge:   25.00,
+			Menge:   4.00,
 		},
 		{
 			Zutat: model.Ingredient{
-				ID:          17,
+				ID:          48,
+				Bezeichnung: "Zucker",
+			},
+			Einheit: "EL",
+			Menge:   0.25,
+		},
+		{
+			Zutat: model.Ingredient{
+				ID:          49,
+				Bezeichnung: "Salz",
+			},
+			Einheit: "Pr",
+			Menge:   0.25,
+		},
+		{
+			Zutat: model.Ingredient{
+				ID:          50,
+				Bezeichnung: "Rum",
+			},
+			Einheit: "EL",
+			Menge:   0.25,
+		},
+		{
+			Zutat: model.Ingredient{
+				ID:          51,
 				Bezeichnung: "Mehl",
 			},
 			Einheit: "g",
@@ -641,67 +786,45 @@ var Fasnachtskrapfen = model.Recipe{
 		},
 		{
 			Zutat: model.Ingredient{
-				ID:          11,
-				Bezeichnung: "Milch",
+				ID:          52,
+				Bezeichnung: "Puderzucker",
 			},
-			Einheit: "ml",
-			Menge:   25.00,
+			Einheit: "EL",
+			Menge:   0.25,
 		},
 		{
 			Zutat: model.Ingredient{
-				ID:          9,
-				Bezeichnung: "Salz",
+				ID:          53,
+				Bezeichnung: "Zitronensaft",
+			},
+			Einheit: "EL",
+			Menge:   0.25,
+		},
+		{
+			Zutat: model.Ingredient{
+				ID:          54,
+				Bezeichnung: "Zimt",
 			},
 			Einheit: "Pr",
 			Menge:   1.00,
 		},
-		{
-			Zutat: model.Ingredient{
-				ID:          48,
-				Bezeichnung: "Puderzucker",
-			},
-			Einheit: "g",
-			Menge:   5.00,
-		},
 	},
 }
 
-fmt.Printf("Default-Rezept: %+v\n", defaultRecipe)
-}
+var storage *InMemoryStorage
 
-
-type InMemoryStorage struct {
-	Rezepte []model.Recipe
-	nextID  int
-}
-
-func NewInMemoryStorage() *InMemoryStorage {
-	rezepte := make([]model.Recipe, 0)
-	rezepte = append(rezepte, WuerzigerFleischsalat, Griesskloesschen, Spargelcremesuppe, GulaschMitSpaetzle, KartoffelgratinMitPilzragout, MilchReisMitKirschen, Apfelstrudel, Kaiserschmarrn, Fasnachtskrapfen)
-	return &InMemoryStorage{
-		Rezepte: rezepte,
+func InitializeStorage() *InMemoryStorage {
+	if storage == nil {
+		storage = NewInMemoryStorage()
+		storage.AddRezept(WuerzigerFleischsalat)
+		storage.AddRezept(Griesskloesschen)
+		storage.AddRezept(Spargelcremesuppe)
+		storage.AddRezept(GulaschMitSpaetzle)
+		storage.AddRezept(KartoffelgratinMitPilzragout)
+		storage.AddRezept(MilchReisMitKirschen)
+		storage.AddRezept(Apfelstrudel)
+		storage.AddRezept(Kaiserschmarrn)
+		storage.AddRezept(Fasnachtskrapfen)
 	}
-}
-
-func (s *InMemoryStorage) AddRezept(rezept model.Recipe) {
-	rezept.ID = s.nextID
-	s.nextID++
-	s.Rezepte[rezept.ID] = rezept
-}
-
-func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
-	rezept, ok := s.Rezepte[id]
-	if !ok {
-		return model.Recipe{}, errors.New("Rezept nicht gefunden")
-	}
-	return rezept, nil
-}
-
-
-func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge float64) error {
-	_, err := s.GetRezept(rezeptID)
-	if err != nil {
-		return err
-	}
-	return nil
+	return storage
 }

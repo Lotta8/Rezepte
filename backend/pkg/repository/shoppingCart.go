@@ -10,6 +10,20 @@ type ShoppingCart struct {
 	cartByUserID map[int][]string
 }
 
+func (s *ShoppingCart) DeleteEinkaufskorb(userID int) error {
+	s.mutex.Lock()
+	defer s.mutex.Unlock()
+
+	_, ok := s.cartByUserID[userID]
+	if !ok {
+		return errors.New("Einkaufskorb nicht gefunden")
+	}
+
+	delete(s.cartByUserID, userID)
+
+	return nil
+}
+
 func NewShoppingCart() *ShoppingCart {
 	return &ShoppingCart{
 		cartByUserID: make(map[int][]string),
@@ -53,4 +67,16 @@ func (s *ShoppingCart) RemoveFromCart(userID int, item string) error {
 	}
 
 	return errors.New("Item not found in the shopping cart")
+}
+
+func (s *ShoppingCart) GetEinkaufskorb(id int) ([]string, error) {
+	s.mutex.RLock()
+	defer s.mutex.RUnlock()
+
+	cart, ok := s.cartByUserID[id]
+	if !ok {
+		return nil, errors.New("Einkaufskorb nicht gefunden")
+	}
+
+	return cart, nil
 }

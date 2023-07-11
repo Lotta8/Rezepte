@@ -1,14 +1,14 @@
 package model
 
 type Ingredient struct {
-	ID          int
-	Bezeichnung string
+	ID          int    `json:"id"`
+	Bezeichnung string `json:"bezeichnung"`
 }
 
 type Recipe struct {
-	ID          int
-	Bezeichnung string
-	Zutaten     []RecipeIngredient
+	ID          int                `json:"id"`
+	Bezeichnung string             `json:"name"`
+	Zutaten     []RecipeIngredient `json:"ingredients"`
 }
 
 type RecipeIngredient struct {

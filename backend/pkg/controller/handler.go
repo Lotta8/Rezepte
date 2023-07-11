@@ -3,44 +3,126 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"log"
+	"net/http"
 	"recipies/pkg/repository"
+	"strconv"
 )
 
-type Handler struct { // Objekt Handler
-	engine     *gin.Engine                 // Datentyp gin.engine
-	repository *repository.InMemoryStorage // selber definiert
+type Handler struct {
+	engine     *gin.Engine
+	repository *repository.InMemoryStorage
 }
 
-func New() *Handler {
-	h := &Handler{ // wir erstellen einen neuen Handler
-		engine:     gin.Default(), // Eigenschaften auf Zeilen 10 + 11 definiert.
-		repository: repository.New(),
+func NewHandler() *Handler {
+	h := &Handler{
+		engine:     gin.Default(),
+		repository: repository.NewInMemoryStorage(),
 	}
-	router := h.engine.Group("/api/recipe/") // Gruppe definiert, in dieser Gruppe folgende Endpunkte definiert, damit ich die Service aufrufen kann. h ist das objekt, welches ich oben instanziert habe.
-	router.GET("/:id", h.GetRecipe)          // Punkt ist immer von einem Objekt, welches instanziert wurde. damit kann z.B. auf die Eigenschaften, Function oder Services zugegriffen werden.
-	router.DELETE("/:id", h.DeleteRecipe)    // Rauts definieren
-	router.GET("/all", h.GetRecipes)
-	router.POST("/", h.CreateRecipe)
-	router.PUT("/", h.UpdateRecipe)
-	router.DELETE("/", h.DeleteEinkaufskorb)
+
+	h.setupRoutes()
+
 	return h
 }
 
-func (h *Handler) Run() { // Func welches an Objekt Handler gebunden ist.
-	err := h.engine.Run()
+func (h *Handler) setupRoutes() {
+	api := h.engine.Group("/api/recipe")
+
+	api.GET("/:id", h.GetRecipe)
+	api.DELETE("/:id", h.DeleteRecipe)
+	api.GET("/all", h.GetRecipes)
+	api.POST("/", h.CreateRecipe)
+	api.PUT("/", h.UpdateRecipe)
+	api.DELETE("/shoppingcart/:id", h.DeleteEinkaufskorb)
+}
+
+func (h *Handler) Run() {
+	err := h.engine.Run(":8080")
 	if err != nil {
 		log.Fatalln(err)
 	}
 }
 
-func (h *Handler) DeleteRecipe(context *gin.Context) {
+func (h *Handler) DeleteRecipe(c *gin.Context) {
+	id := c.Param("id")
+	recipeID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+		return
+	}
 
+	err = h.repository.DeleteRecipe(recipeID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Recipe deleted successfully"})
 }
 
-func (h *Handler) GetRecipe(context *gin.Context) {
+func (h *Handler) GetRecipe(c *gin.Context) {
+	id := c.Param("id")
+	recipeID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+		return
+	}
 
+	recipe, err := h.repository.GetRecipe(recipeID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, recipe)
 }
 
-func (h *Handler) GetRecipes(context *gin.Context) {
+func (h *Handler) GetRecipes(c *gin.Context) {
+	recipes := h.repository.GetAllRecipes()
+	c.JSON(http.StatusOK, recipes)
+}
 
+func (h *Handler) CreateRecipe(c *gin.Context) {
+	var recipe repository.Recipe
+	err := c.ShouldBindJSON(&recipe)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		return
+	}
+
+	newRecipe := h.repository.CreateRecipe(&recipe)
+	c.JSON(http.StatusCreated, newRecipe)
+}
+
+func (h *Handler) UpdateRecipe(c *gin.Context) {
+	var recipe repository.Recipe
+	err := c.ShouldBindJSON(&recipe)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+		return
+	}
+
+	updatedRecipe, err := h.repository.UpdateRecipe(&recipe)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, updatedRecipe)
+}
+
+func (h *Handler) DeleteEinkaufskorb(c *gin.Context) {
+	id := c.Param("id")
+	recipeID, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+		return
+	}
+
+	err = h.repository.DeleteEinkaufskorb(recipeID)
+	if err != nil {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Einkaufskorb not found"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Einkaufskorb deleted successfully"})
 }

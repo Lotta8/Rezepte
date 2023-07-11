@@ -13,6 +13,8 @@ type Recipe struct {
 	Description string `json:"description"`
 }
 
+var recipes []Recipe
+
 func createRecipe(w http.ResponseWriter, r *http.Request) {
 	var recipe Recipe
 	err := json.NewDecoder(r.Body).Decode(&recipe)
@@ -25,7 +27,7 @@ func createRecipe(w http.ResponseWriter, r *http.Request) {
 	recipe.ID = len(recipes) + 1
 
 	// Füge das Rezept zur Liste hinzu
-	recipes = append(recipes)
+	recipes = append(recipes, recipe)
 
 	// Gib die erstellte Recipe-Struktur als JSON zurück
 	w.Header().Set("Content-Type", "application/json")
