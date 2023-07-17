@@ -3,131 +3,39 @@ package repository
 import (
 	"errors"
 	"recipies/pkg/model"
-	"sync"
 )
 
-type InMemoryStorage struct {
-	mutex        sync.RWMutex
-	Rezepte      map[int]model.Recipe
-	nextID       int
-	cartByUserID map[int][]string
+type RecipeInMemoryStorage struct {
+	recipes []*model.Recipe
 }
 
-func NewInMemoryStorage() *InMemoryStorage {
-	rezepte := make(map[int]model.Recipe)
-	return &InMemoryStorage{
-		Rezepte:      rezepte,
-		nextID:       1,
-		cartByUserID: make(map[int][]string),
+func NewRecipeInMemoryStorage() *RecipeInMemoryStorage {
+	recipes := make([]*model.Recipe, 0)
+	recipes = append(recipes, &WuerzigerFleischsalat)
+	recipes = append(recipes, &Griesskloesschen)
+	recipes = append(recipes, &Spargelcremesuppe)
+	recipes = append(recipes, &GulaschMitSpaetzle)
+	recipes = append(recipes, &KartoffelgratinMitPilzragout)
+	recipes = append(recipes, &MilchReisMitKirschen)
+	recipes = append(recipes, &Apfelstrudel)
+	recipes = append(recipes, &Kaiserschmarrn)
+	recipes = append(recipes, &Fasnachtskrapfen)
+	return &RecipeInMemoryStorage{
+		recipes: recipes,
 	}
 }
 
-func (s *InMemoryStorage) AddRezept(rezept *model.Recipe) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	rezept.ID = s.nextID
-	s.nextID++
-	s.Rezepte[rezept.ID] = *rezept
-}
-
-func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
-	s.mutex.RLock()
-	defer s.mutex.RUnlock()
-
-	rezept, ok := s.Rezepte[id]
-	if !ok {
-		return model.Recipe{}, errors.New("Rezept nicht gefunden")
-	}
-	return rezept, nil
-}
-
-func (s *InMemoryStorage) AddZutatToRezept(rezeptID, zutatID int, einheit string, menge float64) error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	rezept, err := s.GetRezept(rezeptID)
-	if err != nil {
-		return err
-	}
-
-	zutat := model.Ingredient{ID: zutatID}
-	recipeIngredient := model.RecipeIngredient{Zutat: zutat, Einheit: einheit, Menge: menge}
-	rezept.Zutaten = append(rezept.Zutaten, recipeIngredient)
-	s.Rezepte[rezeptID] = rezept
-
-	return nil
-}
-
-func (s *InMemoryStorage) DeleteRecipe(id int) error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	_, ok := s.Rezepte[id]
-	if !ok {
-		return errors.New("Rezept nicht gefunden")
-	}
-
-	delete(s.Rezepte, id)
-
-	return nil
-}
-
-// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
-func (s *InMemoryStorage) DeleteEinkaufskorb(userID int) error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	_, ok := s.cartByUserID[userID]
-	if !ok {
-		return errors.New("Einkaufskorb nicht gefunden")
-	}
-
-	delete(s.cartByUserID, userID)
-
-	return nil
-}
-
-// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
-func (s *InMemoryStorage) AddToCart(userID int, item string) {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	s.cartByUserID[userID] = append(s.cartByUserID[userID], item)
-}
-
-// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
-func (s *InMemoryStorage) GetCart(userID int) ([]string, error) {
-	s.mutex.RLock()
-	defer s.mutex.RUnlock()
-
-	cart, ok := s.cartByUserID[userID]
-	if !ok {
-		return nil, errors.New("Einkaufswagen nicht gefunden")
-	}
-
-	return cart, nil
-}
-
-// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
-func (s *InMemoryStorage) RemoveFromCart(userID int, item string) error {
-	s.mutex.Lock()
-	defer s.mutex.Unlock()
-
-	cart, ok := s.cartByUserID[userID]
-	if !ok {
-		return errors.New("Einkaufswagen nicht gefunden")
-	}
-
-	for i, v := range cart {
-		if v == item {
-			// Remove the item from the cart
-			s.cartByUserID[userID] = append(cart[:i], cart[i+1:]...)
-			return nil
+func (s *RecipeInMemoryStorage) GetRecipe(id int) (*model.Recipe, error) {
+	for _, v := range s.recipes {
+		if v.ID == id {
+			return v, nil
 		}
 	}
+	return nil, errors.New("Rezept nicht gefunden")
+}
 
-	return errors.New("Artikel nicht im Einkaufswagen gefunden")
+func (s *RecipeInMemoryStorage) GetAllRecipe() []*model.Recipe {
+	return s.recipes
 }
 
 var WuerzigerFleischsalat = model.Recipe{
@@ -650,6 +558,7 @@ var Apfelstrudel = model.Recipe{
 		},
 	},
 }
+
 var Kaiserschmarrn = model.Recipe{
 	ID:          8,
 	Bezeichnung: "Kaiserschmarrn",
@@ -720,6 +629,7 @@ var Kaiserschmarrn = model.Recipe{
 		},
 	},
 }
+
 var Fasnachtskrapfen = model.Recipe{
 	ID:          9,
 	Bezeichnung: "Fasnachtskrapfen",
@@ -813,22 +723,4 @@ var Fasnachtskrapfen = model.Recipe{
 			Menge:   1.00,
 		},
 	},
-}
-
-var storage *InMemoryStorage
-
-func InitializeStorage() *InMemoryStorage {
-	if storage == nil {
-		storage = NewInMemoryStorage()
-		storage.AddRezept(&WuerzigerFleischsalat)
-		storage.AddRezept(&Griesskloesschen)
-		storage.AddRezept(&Spargelcremesuppe)
-		storage.AddRezept(&GulaschMitSpaetzle)
-		storage.AddRezept(&KartoffelgratinMitPilzragout)
-		storage.AddRezept(&MilchReisMitKirschen)
-		storage.AddRezept(&Apfelstrudel)
-		storage.AddRezept(&Kaiserschmarrn)
-		storage.AddRezept(&Fasnachtskrapfen)
-	}
-	return storage
 }

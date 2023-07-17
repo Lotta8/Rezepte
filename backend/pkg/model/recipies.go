@@ -12,7 +12,7 @@ type Recipe struct {
 }
 
 type RecipeIngredient struct {
-	Zutat   Ingredient
-	Einheit string
-	Menge   float64
+	Zutat   Ingredient `json:"zutat"`
+	Einheit string     `json:"einheit"`
+	Menge   float64    `json:"menge"`
 }

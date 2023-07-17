@@ -11,13 +11,13 @@ import (
 
 type Handler struct {
 	engine     *gin.Engine
-	repository *repository.InMemoryStorage
+	repository *repository.RecipeInMemoryStorage
 }
 
 func NewHandler() *Handler {
 	h := &Handler{
 		engine:     gin.Default(),
-		repository: repository.NewInMemoryStorage(),
+		repository: repository.NewRecipeInMemoryStorage(),
 	}
 
 	h.setupRoutes()
@@ -29,11 +29,11 @@ func (h *Handler) setupRoutes() {
 	api := h.engine.Group("/api/recipe")
 
 	api.GET("/:id", h.GetRecipe)
-	api.DELETE("/:id", h.DeleteRecipe)
+	// api.DELETE("/:id", h.DeleteRecipe)
 	api.GET("/all", h.GetRecipes)
-	api.POST("/", h.CreateRecipe)
-	api.PUT("/", h.UpdateRecipe)
-	api.DELETE("/shoppingcart/:id", h.DeleteEinkaufskorb)
+	// api.POST("/", h.CreateRecipe)
+	// api.PUT("/", h.UpdateRecipe)
+	// api.DELETE("/shoppingcart/:id", h.DeleteEinkaufskorb)
 }
 
 func (h *Handler) Run() {
@@ -60,28 +60,6 @@ func (h *Handler) DeleteRecipe(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"message": "Recipe deleted successfully"})
 }
 
-func (h *Handler) GetRecipe(c *gin.Context) {
-	id := c.Param("id")
-	recipeID, err := strconv.Atoi(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
-		return
-	}
-
-	recipe, err := h.repository.GetRezept(recipeID)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
-		return
-	}
-
-	c.JSON(http.StatusOK, recipe)
-}
-
-func (h *Handler) GetRecipes(c *gin.Context) {
-	recipes := h.repository.GetAllRecipes()
-	c.JSON(http.StatusOK, recipes)
-}
-
 func (h *Handler) CreateRecipe(c *gin.Context) {
 	var recipe model.Recipe
 	err := c.ShouldBindJSON(&recipe)
@@ -106,13 +84,13 @@ func (h *Handler) UpdateRecipe(c *gin.Context) {
 		return
 	}
 
-	updatedRecipe, err := h.repository.UpdateRecipe(&recipe)
+	// updatedRecipe, err := h.repository.UpdateRecipe(&recipe)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, updatedRecipe)
+	// c.JSON(http.StatusOK, updatedRecipe)
 }
 
 func (h *Handler) DeleteEinkaufskorb(c *gin.Context) {

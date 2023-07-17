@@ -2,8 +2,6 @@ package controller
 
 import (
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 )
 
@@ -34,9 +32,9 @@ func createRecipe(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(recipe)
 }
 
-func main() {
-	http.HandleFunc("/recipes", createRecipe)
-
-	fmt.Println("Server gestartet. Höre auf Port 8080...")
-	log.Fatal(http.ListenAndServe(":8080", nil))
-}
+//func main() {
+//	http.HandleFunc("/recipes", createRecipe)
+//
+//	fmt.Println("Server gestartet. Höre auf Port 8080...")
+//	log.Fatal(http.ListenAndServe(":8080", nil))
+//}
