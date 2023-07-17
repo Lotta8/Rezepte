@@ -22,13 +22,13 @@ func NewInMemoryStorage() *InMemoryStorage {
 	}
 }
 
-func (s *InMemoryStorage) AddRezept(rezept model.Recipe) {
+func (s *InMemoryStorage) AddRezept(rezept *model.Recipe) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
 
 	rezept.ID = s.nextID
 	s.nextID++
-	s.Rezepte[rezept.ID] = rezept
+	s.Rezepte[rezept.ID] = *rezept
 }
 
 func (s *InMemoryStorage) GetRezept(id int) (model.Recipe, error) {
@@ -73,6 +73,7 @@ func (s *InMemoryStorage) DeleteRecipe(id int) error {
 	return nil
 }
 
+// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
 func (s *InMemoryStorage) DeleteEinkaufskorb(userID int) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -87,6 +88,7 @@ func (s *InMemoryStorage) DeleteEinkaufskorb(userID int) error {
 	return nil
 }
 
+// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
 func (s *InMemoryStorage) AddToCart(userID int, item string) {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -94,6 +96,7 @@ func (s *InMemoryStorage) AddToCart(userID int, item string) {
 	s.cartByUserID[userID] = append(s.cartByUserID[userID], item)
 }
 
+// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
 func (s *InMemoryStorage) GetCart(userID int) ([]string, error) {
 	s.mutex.RLock()
 	defer s.mutex.RUnlock()
@@ -106,6 +109,7 @@ func (s *InMemoryStorage) GetCart(userID int) ([]string, error) {
 	return cart, nil
 }
 
+// Ich würde diese in den ShopöingCart file verschieben. Hat ja nichts mit dem Rezepten zu tun. :)
 func (s *InMemoryStorage) RemoveFromCart(userID int, item string) error {
 	s.mutex.Lock()
 	defer s.mutex.Unlock()
@@ -816,15 +820,15 @@ var storage *InMemoryStorage
 func InitializeStorage() *InMemoryStorage {
 	if storage == nil {
 		storage = NewInMemoryStorage()
-		storage.AddRezept(WuerzigerFleischsalat)
-		storage.AddRezept(Griesskloesschen)
-		storage.AddRezept(Spargelcremesuppe)
-		storage.AddRezept(GulaschMitSpaetzle)
-		storage.AddRezept(KartoffelgratinMitPilzragout)
-		storage.AddRezept(MilchReisMitKirschen)
-		storage.AddRezept(Apfelstrudel)
-		storage.AddRezept(Kaiserschmarrn)
-		storage.AddRezept(Fasnachtskrapfen)
+		storage.AddRezept(&WuerzigerFleischsalat)
+		storage.AddRezept(&Griesskloesschen)
+		storage.AddRezept(&Spargelcremesuppe)
+		storage.AddRezept(&GulaschMitSpaetzle)
+		storage.AddRezept(&KartoffelgratinMitPilzragout)
+		storage.AddRezept(&MilchReisMitKirschen)
+		storage.AddRezept(&Apfelstrudel)
+		storage.AddRezept(&Kaiserschmarrn)
+		storage.AddRezept(&Fasnachtskrapfen)
 	}
 	return storage
 }

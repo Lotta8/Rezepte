@@ -4,6 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"log"
 	"net/http"
+	"recipies/pkg/model"
 	"recipies/pkg/repository"
 	"strconv"
 )
@@ -67,7 +68,7 @@ func (h *Handler) GetRecipe(c *gin.Context) {
 		return
 	}
 
-	recipe, err := h.repository.GetRecipe(recipeID)
+	recipe, err := h.repository.GetRezept(recipeID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
@@ -82,19 +83,23 @@ func (h *Handler) GetRecipes(c *gin.Context) {
 }
 
 func (h *Handler) CreateRecipe(c *gin.Context) {
-	var recipe repository.Recipe
+	var recipe model.Recipe
 	err := c.ShouldBindJSON(&recipe)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
 		return
 	}
 
-	newRecipe := h.repository.CreateRecipe(&recipe)
-	c.JSON(http.StatusCreated, newRecipe)
+	h.repository.AddRezept(&recipe)
+	c.Status(http.StatusCreated)
 }
 
+// Ihr habt keine UpdateRecipe Function im Repository.
+// Frage: Braucht ihr das wirklich für eure Projekt? Die Rezepte sind bei euch fix gegeben und ihr müsst diese doch nur lesen?
+// GetRezeptDetail(id int) / GetRezpet(id int)
+// GetAllRezept()
 func (h *Handler) UpdateRecipe(c *gin.Context) {
-	var recipe repository.Recipe
+	var recipe model.Recipe
 	err := c.ShouldBindJSON(&recipe)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
