@@ -11,7 +11,7 @@ type RecipeOverviewResponse struct {
 }
 
 func (h *Handler) GetRecipes(c *gin.Context) {
-	recipes := h.repository.GetAllRecipe()
+	recipes := h.recipeInMemoryStorage.GetAllRecipe()
 
 	recipeOverviewResponse := make([]RecipeOverviewResponse, 0)
 	for _, v := range recipes {

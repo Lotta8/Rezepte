@@ -4,13 +4,14 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"recipies/pkg/model"
 	"strconv"
 
 	"github.com/gorilla/mux"
 )
 
 type ShoppingCart struct {
-	Recipes []Recipe `json:"recipes"`
+	Recipes []model.Recipe `json:"recipes"`
 }
 
 var shoppingCart ShoppingCart

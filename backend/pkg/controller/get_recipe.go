@@ -14,7 +14,7 @@ func (h *Handler) GetRecipe(c *gin.Context) {
 		return
 	}
 
-	recipe, err := h.repository.GetRezept(recipeID)
+	recipe, err := h.recipeInMemoryStorage.GetRecipe(recipeID)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return

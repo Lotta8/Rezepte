@@ -6,18 +6,19 @@ import (
 	"net/http"
 	"recipies/pkg/model"
 	"recipies/pkg/repository"
-	"strconv"
 )
 
 type Handler struct {
-	engine     *gin.Engine
-	repository *repository.RecipeInMemoryStorage
+	engine                      *gin.Engine
+	recipeInMemoryStorage       *repository.RecipeInMemoryStorage
+	shoppingCardInMemoryStorage *repository.ShoppingCartInMemoryStorage
 }
 
 func NewHandler() *Handler {
 	h := &Handler{
-		engine:     gin.Default(),
-		repository: repository.NewRecipeInMemoryStorage(),
+		engine:                      gin.Default(),
+		recipeInMemoryStorage:       repository.NewRecipeInMemoryStorage(),
+		shoppingCardInMemoryStorage: repository.NewShoppingCartInMemoryStorage(),
 	}
 
 	h.setupRoutes()
@@ -26,11 +27,12 @@ func NewHandler() *Handler {
 }
 
 func (h *Handler) setupRoutes() {
-	api := h.engine.Group("/api/recipe")
+	api := h.engine.Group("/api")
+	api.GET("/recipe/:id", h.GetRecipe)
+	api.GET("/recipe/all", h.GetRecipes)
 
-	api.GET("/:id", h.GetRecipe)
+	api.POST("/shopping-cart", h.AddRecipeToCart)
 	// api.DELETE("/:id", h.DeleteRecipe)
-	api.GET("/all", h.GetRecipes)
 	// api.POST("/", h.CreateRecipe)
 	// api.PUT("/", h.UpdateRecipe)
 	// api.DELETE("/shoppingcart/:id", h.DeleteEinkaufskorb)
@@ -43,34 +45,34 @@ func (h *Handler) Run() {
 	}
 }
 
-func (h *Handler) DeleteRecipe(c *gin.Context) {
-	id := c.Param("id")
-	recipeID, err := strconv.Atoi(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
-		return
-	}
+//func (h *Handler) DeleteRecipe(c *gin.Context) {
+//	id := c.Param("id")
+//	recipeID, err := strconv.Atoi(id)
+//	if err != nil {
+//		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+//		return
+//	}
+//
+//	err = h.recipeInMemoryStorage.DeleteRecipe(recipeID)
+//	if err != nil {
+//		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
+//		return
+//	}
+//
+//	c.JSON(http.StatusOK, gin.H{"message": "Recipe deleted successfully"})
+//}
 
-	err = h.repository.DeleteRecipe(recipeID)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Recipe deleted successfully"})
-}
-
-func (h *Handler) CreateRecipe(c *gin.Context) {
-	var recipe model.Recipe
-	err := c.ShouldBindJSON(&recipe)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
-		return
-	}
-
-	h.repository.AddRezept(&recipe)
-	c.Status(http.StatusCreated)
-}
+//func (h *Handler) CreateRecipe(c *gin.Context) {
+//	var recipe model.Recipe
+//	err := c.ShouldBindJSON(&recipe)
+//	if err != nil {
+//		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
+//		return
+//	}
+//
+//	h.recipeInMemoryStorage.AddRezept(&recipe)
+//	c.Status(http.StatusCreated)
+//}
 
 // Ihr habt keine UpdateRecipe Function im Repository.
 // Frage: Braucht ihr das wirklich für eure Projekt? Die Rezepte sind bei euch fix gegeben und ihr müsst diese doch nur lesen?
@@ -84,7 +86,7 @@ func (h *Handler) UpdateRecipe(c *gin.Context) {
 		return
 	}
 
-	// updatedRecipe, err := h.repository.UpdateRecipe(&recipe)
+	// updatedRecipe, err := h.recipeInMemoryStorage.UpdateRecipe(&recipe)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
@@ -93,19 +95,19 @@ func (h *Handler) UpdateRecipe(c *gin.Context) {
 	// c.JSON(http.StatusOK, updatedRecipe)
 }
 
-func (h *Handler) DeleteEinkaufskorb(c *gin.Context) {
-	id := c.Param("id")
-	recipeID, err := strconv.Atoi(id)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
-		return
-	}
-
-	err = h.repository.DeleteEinkaufskorb(recipeID)
-	if err != nil {
-		c.JSON(http.StatusNotFound, gin.H{"error": "Einkaufskorb not found"})
-		return
-	}
-
-	c.JSON(http.StatusOK, gin.H{"message": "Einkaufskorb deleted successfully"})
-}
+//func (h *Handler) DeleteEinkaufskorb(c *gin.Context) {
+//	id := c.Param("id")
+//	recipeID, err := strconv.Atoi(id)
+//	if err != nil {
+//		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid recipe ID"})
+//		return
+//	}
+//
+//	err = h.recipeInMemoryStorage.DeleteEinkaufskorb(recipeID)
+//	if err != nil {
+//		c.JSON(http.StatusNotFound, gin.H{"error": "Einkaufskorb not found"})
+//		return
+//	}
+//
+//	c.JSON(http.StatusOK, gin.H{"message": "Einkaufskorb deleted successfully"})
+//}

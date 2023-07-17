@@ -2,8 +2,40 @@ package repository
 
 import (
 	"errors"
+	"recipies/pkg/model"
 	"sync"
 )
+
+type ShoppingCartInMemoryStorage struct {
+	nextId           int
+	shoppingCart     *model.ShoppingCart
+	recipeRepository *RecipeInMemoryStorage
+}
+
+func NewShoppingCartInMemoryStorage() *ShoppingCartInMemoryStorage {
+	return &ShoppingCartInMemoryStorage{
+		nextId:           0,
+		shoppingCart:     &model.ShoppingCart{Items: make([]*model.ShoppingCartItem, 0)},
+		recipeRepository: NewRecipeInMemoryStorage(),
+	}
+}
+
+func (s *ShoppingCartInMemoryStorage) Add(id int) (bool, error) {
+	recipe, err := s.recipeRepository.GetRecipe(id)
+	if err != nil {
+		return false, err
+	}
+
+	s.nextId++
+	s.shoppingCart.Items = append(s.shoppingCart.Items, &model.ShoppingCartItem{
+		Id:     s.nextId,
+		Recipe: recipe,
+	})
+
+	return true, nil
+}
+
+// ----------------------------
 
 type ShoppingCart struct {
 	mutex        sync.RWMutex
