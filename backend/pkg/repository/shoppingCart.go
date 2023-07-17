@@ -36,6 +36,10 @@ func (s *ShoppingCartInMemoryStorage) Add(id int, count int) (bool, error) {
 	return true, nil
 }
 
+func (s *ShoppingCartInMemoryStorage) Get() []*model.ShoppingCartItem {
+	return s.shoppingCart.Items
+}
+
 // ----------------------------
 
 type ShoppingCart struct {

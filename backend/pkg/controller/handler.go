@@ -32,6 +32,7 @@ func (h *Handler) setupRoutes() {
 	api.GET("/recipe/all", h.GetRecipes)
 
 	api.POST("/shopping-cart", h.AddRecipeToCart)
+	api.GET("shopping-cart", h.GetShoppingCart)
 	// api.DELETE("/:id", h.DeleteRecipe)
 	// api.POST("/", h.CreateRecipe)
 	// api.PUT("/", h.UpdateRecipe)
