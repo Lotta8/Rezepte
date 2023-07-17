@@ -15,7 +15,7 @@ type Warenkorb struct {
 }
 
 // Funktion zum Löschen eines Rezepts aus dem Warenkorb
-func (w *Warenkorb) RezeptLöschen(rezeptID int) {
+func (w *Warenkorb) RezeptLoeschen(rezeptID int) {
 	for i, rezept := range w.Rezepte {
 		if rezept.ID == rezeptID {
 			// Rezept aus dem Warenkorb entfernen
@@ -39,7 +39,7 @@ func main() {
 	}
 
 	// Rezept mit ID 2 aus dem Warenkorb löschen
-	warenkorb.RezeptLöschen(2)
+	warenkorb.RezeptLoeschen(2)
 
 	// Überprüfen, ob das Rezept gelöscht wurde
 	for _, rezept := range warenkorb.Rezepte {

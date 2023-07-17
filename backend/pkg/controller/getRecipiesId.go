@@ -15,7 +15,7 @@ type Recip struct {
 	Ingredients []string `json:"ingredients"`
 }
 
-var recipes []Recip // Datenquelle für Rezepte
+var recipes1 []Recip // Datenquelle für Rezepte
 
 func getRecipeByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
