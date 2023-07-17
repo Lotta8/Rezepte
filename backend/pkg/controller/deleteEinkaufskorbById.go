@@ -28,14 +28,20 @@ func (w *Warenkorb) RezeptLoeschen(rezeptID int) {
 }
 
 func main() {
-	// Beispiel-Daten
+
 	rezept1 := &Rezept{ID: 1, Name: "Würziger Fleischsalat"}
 	rezept2 := &Rezept{ID: 2, Name: "Griessklösschen"}
 	rezept3 := &Rezept{ID: 3, Name: "Spargelcremesuppe"}
+	rezept4 := &Rezept{ID: 4, Name: "Gulasch mit Spätzle"}
+	rezept5 := &Rezept{ID: 5, Name: "Kartoffelgratin mit Pilzragout"}
+	rezept6 := &Rezept{ID: 6, Name: "Milchreis mit Kirschen"}
+	rezept7 := &Rezept{ID: 7, Name: "Apfelstrudel"}
+	rezept8 := &Rezept{ID: 8, Name: "Kaiserschmarrn"}
+	rezept9 := &Rezept{ID: 9, Name: "Fasnachtskrapfen"}
 
 	// Warenkorb erstellen und Rezepte hinzufügen
 	warenkorb := &Warenkorb{
-		Rezepte: []*Rezept{rezept1, rezept2, rezept3},
+		Rezepte: []*Rezept{rezept1, rezept2, rezept3, rezept4, rezept5, rezept6, rezept7, rezept8, rezept9},
 	}
 
 	// Rezept mit ID 2 aus dem Warenkorb löschen

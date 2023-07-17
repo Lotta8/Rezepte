@@ -4,10 +4,8 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="version 11.07.2023">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="version 17.07.2023">
       <change beforePath="$PROJECT_DIR$/backend/pkg/controller/deleteEinkaufskorbById.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/deleteEinkaufskorbById.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/getRecipiesId.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/getRecipiesId.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -105,7 +103,8 @@
     <MESSAGE value="version 03.07.2023" />
     <MESSAGE value="version 08.07.2023" />
     <MESSAGE value="version 11.07.2023" />
-    <option name="LAST_COMMIT_MESSAGE" value="version 11.07.2023" />
+    <MESSAGE value="version 17.07.2023" />
+    <option name="LAST_COMMIT_MESSAGE" value="version 17.07.2023" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
