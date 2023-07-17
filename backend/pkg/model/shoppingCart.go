@@ -6,5 +6,6 @@ type ShoppingCart struct {
 
 type ShoppingCartItem struct {
 	Id     int     `json:"id"`
+	Count  int     `json:"count"`
 	Recipe *Recipe `json:"recipe"`
 }

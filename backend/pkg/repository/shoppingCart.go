@@ -20,7 +20,7 @@ func NewShoppingCartInMemoryStorage() *ShoppingCartInMemoryStorage {
 	}
 }
 
-func (s *ShoppingCartInMemoryStorage) Add(id int) (bool, error) {
+func (s *ShoppingCartInMemoryStorage) Add(id int, count int) (bool, error) {
 	recipe, err := s.recipeRepository.GetRecipe(id)
 	if err != nil {
 		return false, err
@@ -29,6 +29,7 @@ func (s *ShoppingCartInMemoryStorage) Add(id int) (bool, error) {
 	s.nextId++
 	s.shoppingCart.Items = append(s.shoppingCart.Items, &model.ShoppingCartItem{
 		Id:     s.nextId,
+		Count:  count,
 		Recipe: recipe,
 	})
 

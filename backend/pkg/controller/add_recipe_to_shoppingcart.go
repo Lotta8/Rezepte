@@ -6,7 +6,8 @@ import (
 )
 
 type RecipeRequest struct {
-	ID int `json:"id"`
+	ID    int `json:"id"`
+	Count int `json:"count"`
 }
 
 func (h *Handler) AddRecipeToCart(context *gin.Context) {
@@ -19,7 +20,7 @@ func (h *Handler) AddRecipeToCart(context *gin.Context) {
 		return
 	}
 
-	_, err = h.shoppingCardInMemoryStorage.Add(recipeRequest.ID)
+	_, err = h.shoppingCardInMemoryStorage.Add(recipeRequest.ID, recipeRequest.Count)
 	if err != nil {
 		context.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
