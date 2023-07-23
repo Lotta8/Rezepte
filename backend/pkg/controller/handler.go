@@ -32,10 +32,8 @@ func (h *Handler) setupRoutes() {
 	api.GET("/recipe/all", h.GetRecipes)
 
 	api.POST("/shopping-cart", h.AddRecipeToCart)
-	api.GET("shopping-cart", h.GetShoppingCart)
+	api.GET("/shopping-cart", h.GetShoppingCart)
 	// api.DELETE("/:id", h.DeleteRecipe)
-	// api.POST("/", h.CreateRecipe)
-	// api.PUT("/", h.UpdateRecipe)
 	// api.DELETE("/shoppingcart/:id", h.DeleteEinkaufskorb)
 }
 
@@ -63,18 +61,6 @@ func (h *Handler) Run() {
 //	c.JSON(http.StatusOK, gin.H{"message": "Recipe deleted successfully"})
 //}
 
-//func (h *Handler) CreateRecipe(c *gin.Context) {
-//	var recipe model.Recipe
-//	err := c.ShouldBindJSON(&recipe)
-//	if err != nil {
-//		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request payload"})
-//		return
-//	}
-//
-//	h.recipeInMemoryStorage.AddRezept(&recipe)
-//	c.Status(http.StatusCreated)
-//}
-
 // Ihr habt keine UpdateRecipe Function im Repository.
 // Frage: Braucht ihr das wirklich für eure Projekt? Die Rezepte sind bei euch fix gegeben und ihr müsst diese doch nur lesen?
 // GetRezeptDetail(id int) / GetRezpet(id int)
@@ -87,13 +73,11 @@ func (h *Handler) UpdateRecipe(c *gin.Context) {
 		return
 	}
 
-	// updatedRecipe, err := h.recipeInMemoryStorage.UpdateRecipe(&recipe)
 	if err != nil {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
 	}
 
-	// c.JSON(http.StatusOK, updatedRecipe)
 }
 
 //func (h *Handler) DeleteEinkaufskorb(c *gin.Context) {

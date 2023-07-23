@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="version 17.07.2023">
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/deleteEinkaufskorbById.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/deleteEinkaufskorbById.go" afterDir="false" />
+    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/handler.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/handler.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
