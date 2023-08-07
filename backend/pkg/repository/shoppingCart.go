@@ -25,7 +25,7 @@ func (s *ShoppingCartInMemoryStorage) DeleteAll() (bool, error) {
 		return false, errors.New("Einkaufswagen ist nicht initialisiert")
 	}
 
-	s.shoppingCart.Items = nil
+	s.shoppingCart.Items = nil // Leere Liste
 	return true, nil
 }
 

@@ -32,8 +32,8 @@ func (h *Handler) setupRoutes() {
 
 	api.POST("/shopping-cart", h.AddRecipeToCart)
 	api.GET("/shopping-cart", h.GetShoppingCart)
-	api.DELETE("/:id", h.DeleteShoppingCart)
-	api.DELETE("/shoppingcart/:id", h.DeleteRecipeFromCart)
+	api.DELETE("/shopping-cart", h.DeleteShoppingCart)
+	api.DELETE("/shopping-cart/:id", h.DeleteRecipeFromCart)
 }
 
 var ErrRecipeNotFound = errors.New("Rezept nicht im Warenkorb gefunden")
