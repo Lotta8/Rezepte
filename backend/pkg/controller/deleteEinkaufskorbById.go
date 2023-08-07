@@ -1,28 +1,28 @@
 package controller
 
 import (
-	"fmt"
+	"errors"
+	"github.com/gin-gonic/gin"
+	"net/http"
+	"strconv"
 )
 
-type Rezept struct {
-	ID   int
-	Name string
-	// Weitere Rezeptdetails
-}
-
-type Warenkorb struct {
-	Rezepte []*Rezept
-}
-
-// Funktion zum Löschen eines Rezepts aus dem Warenkorb
-func (w *Warenkorb) RezeptLoeschen(rezeptID int) {
-	for i, rezept := range w.Rezepte {
-		if rezept.ID == rezeptID {
-			// Rezept aus dem Warenkorb entfernen
-			w.Rezepte = append(w.Rezepte[:i], w.Rezepte[i+1:]...)
-			fmt.Println("Rezept erfolgreich gelöscht")
-			return
-		}
+func (h *Handler) DeleteRecipeFromCart(c *gin.Context) {
+	idParam := c.Param("id")
+	id, err := strconv.Atoi(idParam)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Ungültige Rezept-ID"})
+		return
 	}
-	fmt.Println("Rezept nicht gefunden")
+
+	if _, err := h.shoppingCardInMemoryStorage.DeleteById(id); err != nil {
+		if errors.Is(err, ErrRecipeNotFound) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Rezept nicht im Warenkorb gefunden"})
+		} else {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Fehler beim Löschen des Rezepts aus dem Warenkorb"})
+		}
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"message": "Rezept erfolgreich aus dem Warenkorb entfernt"})
 }

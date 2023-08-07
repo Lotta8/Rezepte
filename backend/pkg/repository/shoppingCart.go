@@ -3,7 +3,6 @@ package repository
 import (
 	"errors"
 	"recipies/pkg/model"
-	"sync"
 )
 
 type ShoppingCartInMemoryStorage struct {
@@ -18,6 +17,28 @@ func NewShoppingCartInMemoryStorage() *ShoppingCartInMemoryStorage {
 		shoppingCart:     &model.ShoppingCart{Items: make([]*model.ShoppingCartItem, 0)},
 		recipeRepository: NewRecipeInMemoryStorage(),
 	}
+}
+
+// Diese Funktion sollte alle Elemente im Warenkorb löschen
+func (s *ShoppingCartInMemoryStorage) DeleteAll() (bool, error) {
+	if s.shoppingCart == nil {
+		return false, errors.New("Einkaufswagen ist nicht initialisiert")
+	}
+
+	s.shoppingCart.Items = nil
+	return true, nil
+}
+
+// Diese Funktion sollte einzelne Elemente im Warenkorb löschen? --> Wir suchen die gewünschte ID im Slice und entfernen es mit append
+func (s *ShoppingCartInMemoryStorage) DeleteById(id int) (bool, error) {
+	for i, item := range s.shoppingCart.Items {
+		if item.Id == id {
+			s.shoppingCart.Items = append(s.shoppingCart.Items[:i], s.shoppingCart.Items[i+1:]...)
+			return true, nil
+		}
+	}
+
+	return false, errors.New("Rezept nicht im Warenkorb gefunden")
 }
 
 func (s *ShoppingCartInMemoryStorage) Add(id int, count int) (bool, error) {
@@ -40,8 +61,8 @@ func (s *ShoppingCartInMemoryStorage) Get() []*model.ShoppingCartItem {
 	return s.shoppingCart.Items
 }
 
-// ----------------------------
-
+// ---------------------------- Diesen Code braucht es nicht mehr?
+/*
 type ShoppingCart struct {
 	mutex        sync.RWMutex
 	cartByUserID map[int][]string
@@ -117,3 +138,4 @@ func (s *ShoppingCart) GetEinkaufskorb(id int) ([]string, error) {
 
 	return cart, nil
 }
+*/
