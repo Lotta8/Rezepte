@@ -6,8 +6,10 @@ import (
 )
 
 type RecipeOverviewResponse struct {
-	ID   int    `json:"id"`
-	Name string `json:"name"`
+	ID          int                  `json:"id"`
+	Name        string               `json:"name"`
+	Bezeichnung string               `json:"Bezeichnung"`
+	Zutaten     []IngredientResponse `json:"zutaten"`
 }
 
 func (h *Handler) GetRecipes(c *gin.Context) {
