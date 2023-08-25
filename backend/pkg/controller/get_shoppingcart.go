@@ -6,13 +6,14 @@ import (
 )
 
 type ShoppingCartItemsResponse struct {
-	Recipes     []RecipeOverviewResponse `json:"recipe"`
+	Recipes     []RecipeOverviewResponse `json:"recipes"`
 	Ingredients []IngredientResponse     `json:"ingredients"`
 }
 
 type IngredientResponse struct {
 	Menge       float64 `json:"menge"`
 	Bezeichnung string  `json:"bezeichnung"`
+	Einheit     string  `json:"einheit"`
 }
 
 func (h *Handler) GetShoppingCart(context *gin.Context) {
@@ -20,10 +21,14 @@ func (h *Handler) GetShoppingCart(context *gin.Context) {
 
 	ingredientMap := make(map[string]float64)
 	recipesMap := make(map[int]RecipeOverviewResponse)
+	ingredientUnits := make(map[string]string)
 
 	for _, item := range shoppingCartItems {
 		for _, ingredient := range item.Recipe.Zutaten {
 			ingredientName := ingredient.Zutat.Bezeichnung
+			if _, exists := ingredientUnits[ingredientName]; !exists {
+				ingredientUnits[ingredientName] = ingredient.Einheit
+			}
 			ingredientMap[ingredientName] += ingredient.Menge
 		}
 		if _, exists := recipesMap[item.Recipe.ID]; !exists {
@@ -39,6 +44,7 @@ func (h *Handler) GetShoppingCart(context *gin.Context) {
 		ingredients = append(ingredients, IngredientResponse{
 			Menge:       quantity,
 			Bezeichnung: ingredientName,
+			Einheit:     ingredientUnits[ingredientName],
 		})
 	}
 

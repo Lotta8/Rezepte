@@ -6,10 +6,8 @@ import (
 )
 
 type RecipeOverviewResponse struct {
-	ID          int                  `json:"id"`
-	Name        string               `json:"name"`
-	Bezeichnung string               `json:"Bezeichnung"`
-	Zutaten     []IngredientResponse `json:"zutaten"`
+	ID          int    `json:"id"`
+	Bezeichnung string `json:"Bezeichnung"`
 }
 
 func (h *Handler) GetRecipes(c *gin.Context) {
@@ -17,7 +15,7 @@ func (h *Handler) GetRecipes(c *gin.Context) {
 
 	recipeOverviewResponse := make([]RecipeOverviewResponse, 0)
 	for _, v := range recipes {
-		recipeOverviewResponse = append(recipeOverviewResponse, RecipeOverviewResponse{ID: v.ID, Name: v.Bezeichnung})
+		recipeOverviewResponse = append(recipeOverviewResponse, RecipeOverviewResponse{ID: v.ID, Bezeichnung: v.Bezeichnung})
 	}
 
 	c.JSON(http.StatusOK, recipeOverviewResponse)

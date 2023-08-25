@@ -2,6 +2,7 @@ package repository
 
 import (
 	"errors"
+	"fmt"
 	"recipies/pkg/model"
 )
 
@@ -25,9 +26,13 @@ func (s *ShoppingCartInMemoryStorage) DeleteAll() (bool, error) {
 }
 
 func (s *ShoppingCartInMemoryStorage) DeleteById(id int) (bool, error) {
-	if _, exists := s.shoppingCart[id]; exists {
-		delete(s.shoppingCart, id)
-		return true, nil
+	for key, item := range s.shoppingCart {
+		fmt.Printf("Checking item with ID %d\n", item.Recipe.ID)
+		if item.Recipe.ID == id {
+			delete(s.shoppingCart, key)
+			fmt.Printf("Deleted item with ID %d\n", id)
+			return true, nil
+		}
 	}
 	return false, errors.New("Rezept nicht im Warenkorb gefunden")
 }
@@ -39,11 +44,12 @@ func (s *ShoppingCartInMemoryStorage) Add(id int, count int) (bool, error) {
 	}
 
 	s.nextId++
-	s.shoppingCart[s.nextId] = &model.ShoppingCartItem{
+	newItem := &model.ShoppingCartItem{
 		Id:     s.nextId,
 		Count:  count,
 		Recipe: recipe,
 	}
+	s.shoppingCart[s.nextId] = newItem
 
 	return true, nil
 }

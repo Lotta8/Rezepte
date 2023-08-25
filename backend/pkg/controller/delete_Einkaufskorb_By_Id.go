@@ -1,7 +1,6 @@
 package controller
 
 import (
-	"errors"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -15,12 +14,9 @@ func (h *Handler) DeleteRecipeFromCart(c *gin.Context) {
 		return
 	}
 
-	if _, err := h.shoppingCardInMemoryStorage.DeleteById(id); err != nil {
-		if errors.Is(err, ErrRecipeNotFound) {
-			c.JSON(http.StatusNotFound, gin.H{"error": "Rezept nicht im Warenkorb gefunden"})
-		} else {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Fehler beim Löschen des Rezepts aus dem Warenkorb"})
-		}
+	success, err := h.shoppingCardInMemoryStorage.DeleteById(id)
+	if err != nil || !success {
+		c.JSON(http.StatusNotFound, gin.H{"error": "Rezept nicht im Warenkorb gefunden"})
 		return
 	}
 

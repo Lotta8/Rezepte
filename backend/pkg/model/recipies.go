@@ -3,6 +3,7 @@ package model
 type Ingredient struct {
 	ID          int    `json:"id"`
 	Bezeichnung string `json:"bezeichnung"`
+	Einheit     string `json:"einheit"`
 }
 
 type Recipe struct {
