@@ -10,6 +10,10 @@ type RecipeRequest struct {
 	Count int `json:"count"`
 }
 
+type SuccessResponse struct {
+	Message string `json:"message"`
+}
+
 func (h *Handler) AddRecipeToCart(context *gin.Context) {
 	var recipeRequest RecipeRequest
 
@@ -25,6 +29,8 @@ func (h *Handler) AddRecipeToCart(context *gin.Context) {
 		context.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
 	}
-
-	context.Status(http.StatusOK)
+	successResponse := SuccessResponse{
+		Message: "Rezept erfolgreich zum Einkaufswagen hinzugefügt",
+	}
+	context.JSON(http.StatusOK, successResponse)
 }

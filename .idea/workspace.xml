@@ -4,13 +4,10 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="businesslogik implementiert berrechnung addieren warenkorb">
+    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="name bei rezept entfernt, deletebyid angepasst, einheit bei ausgabe im map umgewandelt">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/delete_Einkaufskorb_By_Id.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/delete_Einkaufskorb_By_Id.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_all.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_all.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/add_recipe_to_shoppingcart.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/add_recipe_to_shoppingcart.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/pkg/controller/get_shoppingcart.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/get_shoppingcart.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/model/recipies.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/model/recipies.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/repository/shoppingCart.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/repository/shoppingCart.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -113,7 +110,8 @@
     <MESSAGE value="deleteEinkaufskorb und deleteEinkaufskorbById erledigt und Code aufgeräumt die routen im Handler aktiviert" />
     <MESSAGE value="handler angepasst" />
     <MESSAGE value="businesslogik implementiert berrechnung addieren warenkorb" />
-    <option name="LAST_COMMIT_MESSAGE" value="businesslogik implementiert berrechnung addieren warenkorb" />
+    <MESSAGE value="name bei rezept entfernt, deletebyid angepasst, einheit bei ausgabe im map umgewandelt" />
+    <option name="LAST_COMMIT_MESSAGE" value="name bei rezept entfernt, deletebyid angepasst, einheit bei ausgabe im map umgewandelt" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>

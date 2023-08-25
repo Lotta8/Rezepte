@@ -29,7 +29,7 @@ func (h *Handler) GetShoppingCart(context *gin.Context) {
 			if _, exists := ingredientUnits[ingredientName]; !exists {
 				ingredientUnits[ingredientName] = ingredient.Einheit
 			}
-			ingredientMap[ingredientName] += ingredient.Menge
+			ingredientMap[ingredientName] += ingredient.Menge * float64(item.Count)
 		}
 		if _, exists := recipesMap[item.Recipe.ID]; !exists {
 			recipesMap[item.Recipe.ID] = RecipeOverviewResponse{
