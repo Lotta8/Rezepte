@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="Mulitplikation richtig gesetzt in addRecipieToShoppingCart und Bestätigung bei Rezepthinzufügen in get_shoppingcart">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_all.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/pkg/controller/get_recipies_all.go" afterDir="false" />
-    </list>
+    <list default="true" id="22ab9dec-0d11-4573-a051-1e6400e05c2b" name="Changes" comment="Final Version Backend" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -113,7 +110,8 @@
     <MESSAGE value="businesslogik implementiert berrechnung addieren warenkorb" />
     <MESSAGE value="name bei rezept entfernt, deletebyid angepasst, einheit bei ausgabe im map umgewandelt" />
     <MESSAGE value="Mulitplikation richtig gesetzt in addRecipieToShoppingCart und Bestätigung bei Rezepthinzufügen in get_shoppingcart" />
-    <option name="LAST_COMMIT_MESSAGE" value="Mulitplikation richtig gesetzt in addRecipieToShoppingCart und Bestätigung bei Rezepthinzufügen in get_shoppingcart" />
+    <MESSAGE value="Final Version Backend" />
+    <option name="LAST_COMMIT_MESSAGE" value="Final Version Backend" />
   </component>
   <component name="VgoProject">
     <settings-migrated>true</settings-migrated>
