@@ -7,7 +7,7 @@ import (
 
 type RecipeOverviewResponse struct {
 	ID          int    `json:"id"`
-	Bezeichnung string `json:"Bezeichnung"`
+	Bezeichnung string `json:"bezeichnung"`
 }
 
 func (h *Handler) GetRecipes(c *gin.Context) {
