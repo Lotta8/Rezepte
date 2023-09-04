@@ -41,9 +41,9 @@ export default {
     const newTodoDescription = ref('');
     const fetchTodos = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/reminder/all');
+        const response = await axios.get('http://localhost:8080/api/recipe/all');
         todos.value = response.data.map(todo => ({
-          id: todo.id,
+          id: recipe.id,
           task: todo.task,
           done: todo.done
         }));
@@ -58,7 +58,7 @@ export default {
           done: false
         };
         try {
-//const response = await axios.post('http://localhost:8080/api/reminder/', newTodo);
+//const response = await axios.post('http://localhost:8080/api/shopping-cart/', newTodo);
 //const createdTodo = response.data;
           const createdTodo = {
             id: 1,
@@ -79,7 +79,7 @@ export default {
     };
     const deleteTodo = async (id) => {
       try {
-        await axios.delete(`http://localhost:8080/api/reminder/${id}`);
+        await axios.delete(`http://localhost:8080/api/shopping-cart/${id}`);
         todos.value = todos.value.filter(todo => todo.id !== id);
       } catch (error) {
         console.error(error);
@@ -87,7 +87,7 @@ export default {
     };
     const updateTodoStatus = async (todo) => {
       try {
-        await axios.put('http://localhost:8080/api/reminder/', { id: todo.id });
+        await axios.put('http://localhost:8080/api/shopping-cart/', { id: todo.id });
       } catch (error) {
         console.error(error);
       }

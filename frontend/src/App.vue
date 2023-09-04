@@ -1,108 +1,103 @@
 <template>
   <div class="container">
-    <h1 class="display-1">Reminder App</h1>
-    <form @submit.prevent="addTodo"> //@Symbol über actions kann definiert werden, was soll passieren. Submit Action etwas bestätigen.
+    <h1 class="display-1">Omas Rezepte</h1>
+    <ul class="list-group mt-3">
+      <li
+          class="list-group-item d-flex justify-content-between align-items-center"
+          v-for="recipe in recipes"
+          :key="recipe.id"
+      >
+        <span>{{ recipe.bezeichnung }}</span>
+      </li>
+    </ul>
+    <form @submit.prevent="addRecipe">
       <div class="input-group mb-3">
-        <input type="text" //Feld zum Reinschreiben
-               class="form-control"
-               placeholder="Enter a new reminder"
-               aria-label="Enter a new reminder"
-               aria-describedby="button-add"
-               v-model="newTodoDescription">
-        <button class="btn btn-outline-primary" type="submit" id="button-add">Add Reminder</button>
-      </div> //Container
-    </form> //Input Feld und Button zusammenhalten
-    <ul class="list-group mt-3"> //erstellt Liste mit so wie wie im Input Feld eingegeben werden Elemente
-      <li class="d-flex justify-content-between list-group-item list-group-item-action align-items-center"
-          v-for="todo in todos" //egal wie viele, dynamisch und interaktiv, wachst oder schrumpft das File.
-          :key="todo.id">
-<span>
-<input class="form-check-input me-1" //Input Feld mit Checkbox
-       type="checkbox"
-       value=""
-       aria-label="..."
-       v-model="todo.done"
-       @change="updateTodoStatus(todo)"> //Aktion
-<span :class="{ 'completed': todo.done }">{{ todo.task }}</span>
-</span>
+        <input
+            type="text"
+            class="form-control"
+            placeholder="Enter a new recipe"
+            aria-label="Enter a new recipe"
+            aria-describedby="button-add"
+            v-model="newRecipeName"
+        />
+        <button class="btn btn-outline-primary" type="submit" id="button-add">
+          Add Recipe
+        </button>
+      </div>
+    </form>
+    <ul class="list-group mt-3">
+      <li
+          class="d-flex justify-content-between list-group-item list-group-item-action align-items-center"
+          v-for="recipe in recipes"
+          :key="recipe.id"
+      >
         <span>
-<button class="btn" @click="deleteTodo(todo.id)">🗑</button>
-</span>
+          <span :class="{ 'completed': recipe.done }">{{ recipe.bezeichnung }}</span>
+        </span>
+        <span>
+          <button class="btn" @click="deleteRecipe(recipe.id)">🗑</button>
+        </span>
       </li>
     </ul>
   </div>
 </template>
+
 <script>
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
+
 export default {
   setup() {
-    const todos = ref([]); //Variable Liste von Todos
-    const newTodoDescription = ref(''); //neuer leerer String
-    const fetchTodos = async () => {
+    const recipes = ref([]);
+    const newRecipeName = ref('');
+
+    const fetchRecipes = async () => {
       try {
-        const response = await axios.get('http://localhost:8080/api/reminder/all');
-        todos.value = response.data.map(todo => ({
-          id: todo.id,
-          task: todo.task,
-          done: todo.done
-        }));
+        const response = await axios.get('http://localhost:8080/api/recipe/all');
+        recipes.value = response.data;
       } catch (error) {
         console.error(error);
       }
     };
-    const addTodo = async () => {
-      if (newTodoDescription.value.trim() !== '') {
-        const newTodo = {
-          task: newTodoDescription.value.trim(),
+
+    const addRecipe = async () => {
+      if (newRecipeName.value.trim() !== '') {
+        const newRecipe = {
+          bezeichnung: newRecipeName.value.trim(),
           done: false
         };
         try {
-//const response = await axios.post('http://localhost:8080/api/reminder/', newTodo);
-//const createdTodo = response.data;
-          const createdTodo = {
-            id: 1,
-            task: newTodoDescription.value,
-            done: false
-          }
-          const createdTodo2 = {
-            id: 2,
-            task: "bingo",
-            done: false
-          }
-          todos.value.push(createdTodo);
-          newTodoDescription.value = '';
+          const response = await axios.post('http://localhost:8080/api/recipe', newRecipe);
+          const createdRecipe = response.data;
+          recipes.value.push(createdRecipe);
+          newRecipeName.value = '';
         } catch (error) {
           console.error(error);
         }
       }
     };
-    const deleteTodo = async (id) => {
+
+    const deleteRecipe = async (id) => {
       try {
-        await axios.delete(`http://localhost:8080/api/reminder/${id}`);
-        todos.value = todos.value.filter(todo => todo.id !== id);
+        await axios.delete(`http://localhost:8080/api/recipe/${id}`);
+        recipes.value = recipes.value.filter(recipe => recipe.id !== id);
       } catch (error) {
         console.error(error);
       }
     };
-    const updateTodoStatus = async (todo) => {
-      try {
-        await axios.put('http://localhost:8080/api/reminder/', { id: todo.id });
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    onMounted(fetchTodos);
+
+    onMounted(fetchRecipes);
+
     return {
-      todos,
-      newTodoDescription,
-      addTodo,
-      deleteTodo,
-      updateTodoStatus
+      recipes,
+      newRecipeName,
+      addRecipe,
+      deleteRecipe
     };
   }
 };
 </script>
+
 <style>
 .completed {
   text-decoration: line-through;

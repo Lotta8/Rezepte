@@ -2,6 +2,7 @@ package controller
 
 import (
 	"errors"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"log"
 	"recipies/pkg/repository"
@@ -26,6 +27,7 @@ func NewHandler() *Handler {
 }
 
 func (h *Handler) setupRoutes() {
+	configureCors(h.engine)
 	api := h.engine.Group("/api")
 	api.GET("/recipe/:id", h.GetRecipe)
 	api.GET("/recipe/all", h.GetRecipes)
@@ -43,4 +45,11 @@ func (h *Handler) Run() {
 	if err != nil {
 		log.Fatalln(err)
 	}
+}
+
+func configureCors(engine *gin.Engine) {
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:5173"}
+	config.AllowMethods = []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"}
+	engine.Use(cors.New(config))
 }
