@@ -2,7 +2,7 @@
   <div class="container">
     <h1 class="display-1">Omas Rezepte</h1>
     <router-link to="/">Rezeptliste</router-link>
-    <router-link to="/recipe/1">Rezeptdetails</router-link> <!-- Passen Sie "1" entsprechend an -->
+    <router-link to="/recipe/1">Rezeptdetails</router-link>
     <router-view></router-view>
     <ul class="list-group mt-3">
       <li
