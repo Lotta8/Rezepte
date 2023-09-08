@@ -1,7 +1,10 @@
 <template>
   <div class="container">
     <h1 class="display-1">Rezeptdetails</h1>
-    <div v-if="recipe" class="card">
+    <div v-if="error" class="alert alert-danger">
+      {{ error }}
+    </div>
+    <div v-else-if="recipe" class="card">
       <div class="card-body">
         <h5 class="card-title">{{ recipe.bezeichnung }}</h5>
         <h6 class="card-subtitle mb-2 text-muted">ID: {{ recipe.id }}</h6>
@@ -14,11 +17,12 @@
       </div>
     </div>
     <div v-else>
-      <p>Loading...</p>
+      <div class="alert alert-info">
+        Lade...
+      </div>
     </div>
   </div>
 </template>
-
 
 <script>
 import { ref, onMounted } from 'vue';
@@ -28,13 +32,16 @@ export default {
   props: ['recipeId'],
   setup(props) {
     const recipe = ref(null);
+    const error = ref(null);
 
     const fetchRecipe = async (id) => {
       try {
         const response = await axios.get(`http://localhost:8080/api/recipe/${id}`);
         recipe.value = response.data;
-      } catch (error) {
-        console.error(error);
+        error.value = null; // Fehler zurücksetzen, falls erfolgreich
+      } catch (err) {
+        console.error(err);
+        error.value = "Fehler beim Abrufen der Rezeptdetails.";
       }
     };
 
@@ -46,6 +53,7 @@ export default {
 
     return {
       recipe,
+      error,
     };
   },
 };
