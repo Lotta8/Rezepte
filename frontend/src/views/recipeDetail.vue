@@ -1,64 +1,72 @@
 <template>
-  <div class="container">
-    <h1 class="display-1">Rezeptdetails</h1>
-    <div v-if="error" class="alert alert-danger">
-      {{ error }}
+  <div>
+    <h1>Rezepte</h1>
+    <!-- ... deine bestehende Rezeptanzeige ... -->
+
+    <!-- Eingabefelder für ID und Menge -->
+    <div>
+      <input v-model="recipeId" placeholder="Rezept ID" />
+      <input v-model="recipeCount" placeholder="Menge" />
+      <button @click="addToCart">Zum Einkaufswagen hinzufügen</button>
     </div>
-    <div v-else-if="recipe" class="card">
-      <div class="card-body">
-        <h5 class="card-title">{{ recipe.bezeichnung }}</h5>
-        <h6 class="card-subtitle mb-2 text-muted">ID: {{ recipe.id }}</h6>
-        <p class="card-text">Zutaten:</p>
-        <ul>
-          <li v-for="ingredient in recipe.zutaten" :key="ingredient.zutat.id">
-            {{ ingredient.zutat.bezeichnung }} - {{ ingredient.menge }} {{ ingredient.einheit }}
-          </li>
-        </ul>
-      </div>
-    </div>
-    <div v-else>
-      <div class="alert alert-info">
-        Lade...
-      </div>
+
+    <!-- Anzeige der hinzugefügten Rezepte -->
+    <div>
+      <h2>Hinzugefügte Rezepte:</h2>
+      <ul>
+        <li v-for="cartItem in cartItems" :key="cartItem.id">
+          {{ cartItem.name }} ({{ cartItem.count }}x)
+        </li>
+      </ul>
     </div>
   </div>
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+import { onMounted, ref } from 'vue';
 import axios from 'axios';
 
 export default {
-  props: ['recipeId'],
-  setup(props) {
-    const recipe = ref(null);
-    const error = ref(null);
+  setup() {
+    const recipes = ref([]);
+    const recipeId = ref('');
+    const recipeCount = ref('');
+    const cartItems = ref([]); // Hinzugefügte Rezepte
 
-    const fetchRecipe = async (id) => {
+    const fetchRecipes = async () => {
+      // ... deine bestehende Funktion zum Laden der Rezepte ...
+    };
+
+    const addToCart = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/api/recipe/${id}`);
-        recipe.value = response.data;
-        error.value = null; // Fehler zurücksetzen, falls erfolgreich
-      } catch (err) {
-        console.error(err);
-        error.value = "Fehler beim Abrufen der Rezeptdetails.";
+        const response = await axios.post('http://localhost:8080/api/shopping-cart', {
+          id: parseInt(recipeId.value),
+          count: parseInt(recipeCount.value),
+        });
+
+        // Füge das hinzugefügte Rezept zur Liste der hinzugefügten Rezepte hinzu
+        cartItems.value.push({
+          id: parseInt(recipeId.value),
+          count: parseInt(recipeCount.value),
+          name: response.data.recipeName, // Annahme: Die API gibt den Namen des hinzugefügten Rezepts zurück
+        });
+
+        console.log(response.data.message); // Zeige die Erfolgsmeldung an
+      } catch (error) {
+        console.error(error);
       }
     };
 
-    onMounted(() => {
-      if (props.recipeId) {
-        fetchRecipe(props.recipeId);
-      }
-    });
+    // ... andere bestehende Funktionen ...
 
     return {
-      recipe,
-      error,
+      recipes,
+      recipeId,
+      recipeCount,
+      fetchRecipes,
+      addToCart,
+      cartItems, // Hinzugefügte Rezepte
     };
   },
 };
 </script>
-
-<style scoped>
-/* Hier können Sie Ihre CSS-Stile hinzufügen */
-</style>

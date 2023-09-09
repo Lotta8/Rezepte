@@ -1,20 +1,34 @@
-// router.js
 import { createRouter, createWebHistory } from 'vue-router';
-import RecipeDetail from '@/views/recipeDetail.vue';
+import Rezepte from "./views/Rezepte.vue";
+import RecipeDetail from './views/recipeDetail.vue';
+import ShoppingCart from './views/ShoppingCart.vue';
 
 const routes = [
-    // Andere Routen, falls vorhanden
     {
-        path: '/recipe/:id',
-        name: 'recipe-detail',
+        path: '/',
+        redirect: '/rezeptliste', // Weiterleitung von "/" auf "/rezeptliste"
+    },
+    {
+        path: '/rezepte',
+        name: 'rezepte',
+        component: Rezepte,
+    },
+    {
+        path: '/rezeptliste',
+        name: 'rezeptListe',
         component: RecipeDetail,
-        props: true,
+    },
+
+    {
+        path: '/einkaufswagen',
+        name: 'einkaufswagen',
+        component: ShoppingCart,
     },
 ];
 
 const router = createRouter({
     history: createWebHistory(),
-    routes
+    routes,
 });
 
 export default router;
