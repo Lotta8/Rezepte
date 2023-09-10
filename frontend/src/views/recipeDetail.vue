@@ -1,12 +1,25 @@
 <template>
   <div>
-    <h1>Rezepte</h1>
+    <h1>Rezepteliste</h1>
+
+    <!-- Numerische Aufzählung der Rezepte -->
+    <ol>
+      <li v-for="(recipe, index) in recipes" :key="recipe.id">
+        {{ displayedIndex(index) }}. {{ recipe.bezeichnung }}
+      </li>
+    </ol>
+
     <!-- ... deine bestehende Rezeptanzeige ... -->
 
-    <!-- Eingabefelder für ID und Menge -->
-    <div>
-      <input v-model="recipeId" placeholder="Rezept ID" />
-      <input v-model="recipeCount" placeholder="Menge" />
+    <!-- Eingabefelder für ID und Menge mit Beschriftungen -->
+    <h2>Rezept zum Einkaufswagen hinzufügen</h2>
+    <div class="input-container">
+      <label for="recipeId">Rezeptnummer:</label>
+      <input id="recipeId" v-model="recipeId" placeholder="Rezept ID" />
+
+      <label for="recipeCount">Anzahl Personen:</label>
+      <input id="recipeCount" v-model="recipeCount" placeholder="Anzahl" />
+
       <button @click="addToCart">Zum Einkaufswagen hinzufügen</button>
     </div>
 
@@ -15,12 +28,25 @@
       <h2>Hinzugefügte Rezepte:</h2>
       <ul>
         <li v-for="cartItem in cartItems" :key="cartItem.id">
-          {{ cartItem.name }} ({{ cartItem.count }}x)
+          Rezept {{ cartItem.name }} {{ cartItem.count }}x hinzugefügt
         </li>
       </ul>
     </div>
   </div>
 </template>
+
+<style scoped>
+/* CSS-Stile für die verbesserte Formatierung der Eingabefelder */
+.input-container {
+  display: flex;
+  flex-direction: column;
+  gap: 10px; /* Abstand zwischen den Eingabefeldern */
+}
+
+label {
+  font-weight: bold;
+}
+</style>
 
 <script>
 import { onMounted, ref } from 'vue';
@@ -34,7 +60,12 @@ export default {
     const cartItems = ref([]); // Hinzugefügte Rezepte
 
     const fetchRecipes = async () => {
-      // ... deine bestehende Funktion zum Laden der Rezepte ...
+      try {
+        const response = await axios.get('http://localhost:8080/api/recipe/all');
+        recipes.value = response.data;
+      } catch (error) {
+        console.error(error);
+      }
     };
 
     const addToCart = async () => {
@@ -57,15 +88,22 @@ export default {
       }
     };
 
+    // Funktion zur Anzeige der numerischen Aufzählung
+    const displayedIndex = (index) => {
+      return index + 1;
+    };
+
     // ... andere bestehende Funktionen ...
+
+    onMounted(fetchRecipes);
 
     return {
       recipes,
       recipeId,
       recipeCount,
-      fetchRecipes,
       addToCart,
       cartItems, // Hinzugefügte Rezepte
+      displayedIndex // Funktion zur Anzeige der numerischen Aufzählung
     };
   },
 };
