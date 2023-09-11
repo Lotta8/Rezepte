@@ -1,54 +1,101 @@
 <template>
-  <div>
-    <h1>Rezepteliste</h1>
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Alle Rezepte</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li v-for="(recipe, index) in recipes" :key="recipe.id">
+                {{ displayedIndex(index) }} {{ recipe.bezeichnung }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
 
-    <h2>Alle Rezepte</h2>
-    <div>
-      <ul>
-        <li v-for="(recipe, index) in recipes" :key="recipe.id">
-          {{ displayedIndex(index) }} {{ recipe.bezeichnung }}
-        </li>
-      </ul>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Rezept suchen</h3>
+          </div>
+          <div class="card-body">
+            <div class="input-container">
+              <label for="recipeSearchId">Rezept-ID:</label>
+              <input id="recipeSearchId" v-model="recipeSearchId" placeholder="Rezept ID" />
+              <button @click="searchRecipe" class="btn btn-primary">Suchen</button>
+              <button @click="clearRecipe" class="btn btn-danger">Rezept entfernen</button>
+            </div>
+            <div>
+              <div v-if="recipeNotFound">
+                <p>Das gesuchte Rezept wurde nicht gefunden.</p>
+              </div>
+              <div v-else-if="recipeDetails">
+                <h3>
+                  {{ recipeDetails.name }}
+                  <button @click="toggleRecipeDetails" class="btn btn-primary">
+                    {{ showRecipeDetails ? "Einklappen" : "Ausklappen" }}
+                  </button>
+                </h3>
+                <ul v-show="showRecipeDetails">
+                  <li v-for="ingredient in recipeDetails.ingredients" :key="ingredient.zutat.id">
+                    {{ ingredient.menge }} {{ ingredient.einheit }} {{ ingredient.zutat.bezeichnung }}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <h2>Rezept suchen</h2>
-    <!-- Eingabefeld für Rezept-ID -->
-    <label for="recipeSearchId">Rezept-ID:</label>
-    <input id="recipeSearchId" v-model="recipeSearchId" placeholder="Rezept ID" />
-    <button @click="searchRecipe">Suchen</button>
-
-    <!-- Anzeige der Rezeptdetails -->
-    <div v-if="recipeDetails">
-      <h3>{{ recipeDetails.name }}</h3>
-      <ul>
-        <li v-for="ingredient in recipeDetails.ingredients" :key="ingredient.zutat.id">
-          {{ ingredient.menge }} {{ ingredient.einheit }} {{ ingredient.zutat.bezeichnung }}
-        </li>
-      </ul>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Rezept zum Einkaufswagen hinzufügen</h3>
+          </div>
+          <div class="card-body">
+            <div class="input-container">
+              <label for="recipeId">Rezeptnummer:</label>
+              <input id="recipeId" v-model="recipeId" placeholder="Rezept ID" />
+              <label for="recipeCount">Anzahl Personen:</label>
+              <input id="recipeCount" v-model="recipeCount" placeholder="Anzahl" />
+              <button @click="addToCart" class="btn btn-success">Zum Einkaufswagen hinzufügen</button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <h2>Rezept zum Einkaufswagen hinzufügen</h2>
-    <div class="input-container">
-      <label for="recipeId">Rezeptnummer:</label>
-      <input id="recipeId" v-model="recipeId" placeholder="Rezept ID" />
-
-      <label for="recipeCount">Anzahl Personen:</label>
-      <input id="recipeCount" v-model="recipeCount" placeholder="Anzahl" />
-
-      <button @click="addToCart">Zum Einkaufswagen hinzufügen</button>
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Hinzugefügte Rezepte</h3>
+          </div>
+          <div class="card-body">
+            <ul>
+              <li v-for="cartItem in cartItems" :key="cartItem.id">
+                Rezept {{ cartItem.bezeichnung }} {{ cartItem.count }}x hinzugefügt
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </div>
-
-    <h2>Hinzugefügte Rezepte:</h2>
-    <ul>
-      <li v-for="cartItem in cartItems" :key="cartItem.id">
-        Rezept {{ cartItem.bezeichnung }} {{ cartItem.count }}x hinzugefügt
-      </li>
-    </ul>
   </div>
 </template>
 
-<!-- ... rest of your code ... -->
-
+<style>
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+</style>
 
 <script>
 import { onMounted, ref } from 'vue';
@@ -62,6 +109,8 @@ export default {
     const cartItems = ref([]);
     const recipeSearchId = ref('');
     const recipeDetails = ref(null);
+    const recipeNotFound = ref(false);
+    const showRecipeDetails = ref(true);
 
     const fetchRecipes = async () => {
       try {
@@ -95,9 +144,20 @@ export default {
       try {
         const response = await axios.get(`http://localhost:8080/api/recipe/${recipeSearchId.value}`);
         recipeDetails.value = response.data;
+        recipeNotFound.value = false;
       } catch (error) {
         console.error(error);
+        recipeNotFound.value = true;
       }
+    };
+
+    const toggleRecipeDetails = () => {
+      showRecipeDetails.value = !showRecipeDetails.value;
+    };
+
+    const clearRecipe = () => {
+      recipeDetails.value = null;
+      recipeNotFound.value = false;
     };
 
     const displayedIndex = (index) => {
@@ -116,6 +176,10 @@ export default {
       recipeSearchId,
       searchRecipe,
       recipeDetails,
+      recipeNotFound,
+      showRecipeDetails,
+      toggleRecipeDetails,
+      clearRecipe,
     };
   },
 };
