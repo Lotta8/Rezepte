@@ -25,16 +25,16 @@
   border-radius: 10px 10px 0 0;
 }
 
-/* Auseinandernehmen der Buttons */
+
 .btn-primary {
   background-color: #007BFF;
   color: white;
   font-weight: bold;
-  margin-right: 20px; /* Abstand zwischen den Buttons */
+  margin-right: 20px;
 }
 
 .btn-primary:last-child {
-  margin-right: 0; /* Kein Abstand nach dem letzten Button */
+  margin-right: 0;
 }
 
 .btn-primary:hover {

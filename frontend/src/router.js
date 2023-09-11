@@ -6,7 +6,7 @@ import ShoppingCart from './views/ShoppingCart.vue';
 const routes = [
     {
         path: '/',
-        redirect: '/rezeptliste', // Weiterleitung von "/" auf "/rezeptliste"
+        redirect: '/rezeptliste',
     },
     {
         path: '/rezepte',
