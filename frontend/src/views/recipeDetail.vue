@@ -65,6 +65,9 @@
               <input id="recipeCount" v-model="recipeCount" placeholder="Anzahl" />
               <button @click="addToCart" class="btn btn-success">Zum Einkaufswagen hinzufügen</button>
             </div>
+            <div v-if="cartError" class="error-message">
+              Das Rezept wurde nicht gefunden.
+            </div>
           </div>
         </div>
       </div>
@@ -95,6 +98,11 @@
   align-items: center;
   gap: 10px;
 }
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
 </style>
 
 <script>
@@ -110,6 +118,7 @@ export default {
     const recipeSearchId = ref('');
     const recipeDetails = ref(null);
     const recipeNotFound = ref(false);
+    const cartError = ref(false);
     const showRecipeDetails = ref(true);
 
     const fetchRecipes = async () => {
@@ -122,23 +131,76 @@ export default {
     };
 
     const addToCart = async () => {
+      console.log('addToCart called');
       try {
-        const response = await axios.post('http://localhost:8080/api/shopping-cart', {
-          id: parseInt(recipeId.value),
-          count: parseInt(recipeCount.value),
-        });
+        const response = await axios.get(`http://localhost:8080/api/recipe/${recipeId.value}`);
+        console.log('Response data:', response.data);
 
-        cartItems.value.push({
-          id: parseInt(recipeId.value),
-          count: parseInt(recipeCount.value),
-          bezeichnung: response.data.recipeName,
-        });
+        if (response.data && response.data.id) {
+          const recipeData = response.data;
 
-        console.log(response.data.message);
+
+          const cartItem = {
+            id: recipeData.id,
+            count: parseInt(recipeCount.value),
+            bezeichnung: recipeData.name,
+            zutaten: recipeData.ingredients,
+          };
+
+
+          console.log('CartItem:', cartItem);
+
+
+          const cartResponse = await axios.post('http://localhost:8080/api/shopping-cart', cartItem);
+
+          if (cartResponse.status === 200) {
+
+            cartItems.value.push(cartItem);
+            cartError.value = false;
+
+
+            console.log('Updated cartItems:', cartItems.value); // Hinzugefügtes Rezept anzeigen
+          } else {
+            cartError.value = true;
+            console.error("Rezept konnte nicht zum Warenkorb hinzugefügt werden.");
+          }
+        } else {
+          cartError.value = true;
+          console.error("Rezept wurde nicht gefunden.");
+        }
       } catch (error) {
         console.error(error);
       }
+      console.log('addToCart called');
+      try {
+        const response = await axios.get(`http://localhost:8080/api/recipe/${recipeId.value}`);
+        console.log('Response data:', response.data);
+
+        if (response.data && response.data.id) {
+          const recipeData = response.data;
+
+          // Erstellen Sie ein Objekt, das an den Warenkorb gesendet wird
+          const cartItem = {
+            id: recipeData.id,
+            count: parseInt(recipeCount.value),
+            bezeichnung: recipeData.name,
+            zutaten: recipeData.ingredients,
+          };
+
+          // Überprüfen Sie, ob cartItem korrekt erstellt wurde
+          console.log('CartItem:', cartItem);
+
+          // ...
+        } else {
+          cartError.value = true;
+          console.error("Rezept wurde nicht gefunden.");
+        }
+      } catch (error) {
+        console.error(error);
+      }
+
     };
+
 
     const searchRecipe = async () => {
       try {
@@ -177,6 +239,7 @@ export default {
       searchRecipe,
       recipeDetails,
       recipeNotFound,
+      cartError,
       showRecipeDetails,
       toggleRecipeDetails,
       clearRecipe,
