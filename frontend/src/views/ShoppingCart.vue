@@ -1,24 +1,33 @@
 <template>
   <div class="cart-container">
     <h1 class="page-title">Einkaufswagen</h1>
-    <button @click="clearCart" class="clear-button">Warenkorb leeren</button>
 
-    <div class="cart-list">
-      <div v-for="recipe in cartItems.recipes" :key="recipe.id" class="cart-item">
-        <h2 class="recipe-title">{{ recipe.bezeichnung }}</h2>
-        <p class="recipe-count">Anzahl Personen: {{ recipe.count }}</p>
-        <h3>Zutaten:</h3>
-        <ul class="ingredient-list">
-          <li v-for="ingredient in cartItems.ingredients" :key="ingredient.bezeichnung" class="ingredient-item">
-            <p class="ingredient-details">{{ ingredient.menge }} {{ ingredient.einheit }} {{ ingredient.bezeichnung }}</p>
-          </li>
-        </ul>
-        <button @click="removeFromCart(recipe.id)" class="remove-button">Entfernen</button>
-      </div>
+    <!-- Box für Rezeptnamen -->
+    <div class="recipe-names">
+      <h2 class="recipe-title">Hinzugefügte Rezepte:</h2>
+      <ul class="added-recipes">
+        <li v-for="recipe in cartItems.recipes" :key="recipe.id">
+          {{ recipe.bezeichnung }}
+          <button @click="removeFromCart(recipe.id)" class="remove-button">Entfernen</button>
+        </li>
+      </ul>
     </div>
+
+    <!-- Box für Zutaten -->
+    <div class="cart-item">
+      <h2 class="recipe-title">Warenkorb:</h2>
+      <ul class="ingredient-list">
+        <li v-for="ingredient in cartItems.ingredients" :key="ingredient.bezeichnung" class="ingredient-item">
+          <p class="ingredient-details">
+            {{ ingredient.menge }} {{ ingredient.einheit }} {{ ingredient.bezeichnung }}
+          </p>
+        </li>
+      </ul>
+    </div>
+
+    <button @click="clearCart" class="clear-button">Warenkorb leeren</button>
   </div>
 </template>
-
 
 <script>
 import { ref, onMounted } from 'vue';
@@ -72,6 +81,8 @@ export default {
 };
 </script>
 
+
+
 <style scoped>
 .cart-container {
   display: flex;
@@ -80,6 +91,17 @@ export default {
   padding: 20px;
   background-color: #f4f4f4;
   border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-top: 20px;
+}
+
+.added-recipes {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px;
+  background-color: #f4f4f4;
+  border-radius: 80px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-top: 20px;
 }
@@ -114,10 +136,6 @@ export default {
   font-size: 20px;
 }
 
-.recipe-count {
-  font-size: 16px;
-  margin-top: 5px;
-}
 
 .ingredient-list {
   list-style: none;
