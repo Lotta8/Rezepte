@@ -19,6 +19,6 @@ func (h *Handler) GetRecipe(c *gin.Context) {
 		c.JSON(http.StatusNotFound, gin.H{"error": "Recipe not found"})
 		return
 	}
-	// optional mapping von model zu response model...
+
 	c.JSON(http.StatusOK, recipe)
 }
