@@ -17,7 +17,6 @@
 </template>
 
 <style>
-/* Anpassungen für den Header */
 .header {
   background-color: #888888;
   color: white;
@@ -41,7 +40,6 @@
   background-color: #888888;
 }
 
-/* Stil für die Fußzeile */
 footer {
   background-color: #f8f9fa;
   padding: 20px;

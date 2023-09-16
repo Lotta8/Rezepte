@@ -92,19 +92,6 @@
   </div>
 </template>
 
-<style>
-.input-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.error-message {
-  color: red;
-  margin-top: 10px;
-}
-</style>
-
 <script>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
@@ -247,3 +234,15 @@ export default {
   },
 };
 </script>
+<style>
+.input-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
+}
+</style>

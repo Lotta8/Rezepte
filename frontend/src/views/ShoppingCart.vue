@@ -15,7 +15,7 @@
 
     <!-- Box für Zutaten -->
     <div class="cart-item">
-      <h2 class="recipe-title">Warenkorb:</h2>
+      <h2 class="recipe-title">Warenkorb</h2>
       <ul class="ingredient-list">
         <li v-for="ingredient in cartItems.ingredients" :key="ingredient.bezeichnung" class="ingredient-item">
           <p class="ingredient-details">
@@ -25,6 +25,9 @@
       </ul>
     </div>
 
+    <!-- PDF Button -->
+    <button @click="downloadPDF" class="download-button">PDF herunterladen</button>
+
     <button @click="clearCart" class="clear-button">Warenkorb leeren</button>
   </div>
 </template>
@@ -32,6 +35,7 @@
 <script>
 import { ref, onMounted } from 'vue';
 import axios from 'axios';
+import html2pdf from 'html2pdf.js';
 
 export default {
   setup() {
@@ -68,6 +72,30 @@ export default {
       }
     };
 
+    const downloadPDF = async () => {
+      const cartHtml = document.querySelector('.cart-container');
+
+      const pdfOptions = {
+        margin: 10,
+        filename: 'warenkorb.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      };
+
+      try {
+        const pdfFile = await html2pdf().from(cartHtml).set(pdfOptions).outputPdf();
+        const blob = new Blob([pdfFile], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'warenkorb.pdf';
+        a.click();
+      } catch (error) {
+        console.error('Fehler beim Erstellen des PDFs:', error);
+      }
+    };
+
     onMounted(() => {
       fetchCartItems();
     });
@@ -76,12 +104,11 @@ export default {
       cartItems,
       removeFromCart,
       clearCart,
+      downloadPDF,
     };
   },
 };
 </script>
-
-
 
 <style scoped>
 .cart-container {
@@ -157,5 +184,13 @@ export default {
   border: none;
   cursor: pointer;
   margin-top: 10px;
+}
+.download-button {
+  padding: 5px 10px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 20px;
 }
 </style>

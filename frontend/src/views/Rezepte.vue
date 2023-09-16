@@ -10,39 +10,6 @@
   </div>
 </template>
 
-<style>
-.recipe-container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 50px;
-  background-color: #f4f4f4;
-  border-radius: 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.recipe-list {
-  width: 50%;
-  margin-top: 20px; /* Ändern Sie diesen Wert nach Bedarf */
-}
-
-.recipe-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  padding: 25px;
-  margin-bottom: 20px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s;
-}
-
-.recipe-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  cursor: pointer;
-}
-</style>
 
 <script>
 import { onMounted, ref } from 'vue';
@@ -69,3 +36,37 @@ export default {
   }
 };
 </script>
+
+<style>
+.recipe-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px;
+  background-color: #f4f4f4;
+  border-radius: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.recipe-list {
+  width: 50%;
+  margin-top: 20px;
+}
+
+.recipe-item {
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 25px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+}
+
+.recipe-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+</style>

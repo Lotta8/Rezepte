@@ -1,4 +1,4 @@
-// vite.config.js
+
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -9,7 +9,7 @@ export default defineConfig({
   ],
   resolve: {
     alias: {
-      '@': '/src' // Stelle sicher, dass der Pfad zu deinem "src"-Verzeichnis korrekt ist
+      '@': '/src'
     }
   }
 })
