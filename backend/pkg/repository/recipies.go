@@ -537,8 +537,8 @@ var Apfelstrudel = model.Recipe{
 				ID:          11,
 				Bezeichnung: "Milch",
 			},
-			Einheit: "dl",
-			Menge:   1.00,
+			Einheit: "ml",
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
@@ -576,8 +576,8 @@ var Kaiserschmarrn = model.Recipe{
 				ID:          11,
 				Bezeichnung: "Milch",
 			},
-			Einheit: "dl",
-			Menge:   1.00,
+			Einheit: "ml",
+			Menge:   100.00,
 		},
 		{
 			Zutat: model.Ingredient{
